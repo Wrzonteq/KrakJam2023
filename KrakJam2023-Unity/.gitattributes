@@ -41,14 +41,14 @@ WHATSNEW*          text
 
 # Apply Unix-style LF line-endings on checkout of these files...
 *.meta             text eol=lf
-*.spriteatlas      text eol=lf
 *.sh               text eol=lf
 *.vspscc           text eol=lf
 .htaccess          text eol=lf
 
-*.unity            binary
-*.asset            binary
-*.prefab           binary
+# Previous "binary"
+*.unity            binary diff
+*.asset            binary diff
+*.prefab           text
 
 # Apply Windows/DOS-style CR-LF line-endings on checkout of these files...
 *.bat              text eol=crlf
@@ -96,7 +96,7 @@ WHATSNEW*          text
 *.jpg              binary
 *.keystore         binary
 *.mask             binary
-*.mat              binary
+*.mat              text
 *.mb               binary
 *.mp3              binary
 *.mp4              binary
@@ -106,8 +106,8 @@ WHATSNEW*          text
 *.pcx              binary
 *.pdb              binary
 *.pdf              binary
-*.physicMaterial   binary
-*.physicmaterial   binary
+*.physicMaterial   text
+*.physicmaterial   text
 *.png              binary
 *.ps               binary
 *.psd              binary
