@@ -1,17 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : MonoBehaviour
-{
-    public int HP_max;
-    public int HP_current;
+public abstract class Creature : MonoBehaviour {
+    [SerializeField] int maxHealth;
 
-    public void GetDmg(int dmg) {
-        if ((HP_current -= dmg) <= 0)
+
+    public int MaxHealth => maxHealth;
+    public int CurrentHealth { get; private set; }
+
+
+    public void DealDamage(int dmg) {
+        if ((CurrentHealth -= dmg) <= 0)
             Die();
     }
-    private void Die() {
-        
+
+    protected virtual void AddHealth(int value) {
+        CurrentHealth += value;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
+
+    protected abstract void Die();
 }
