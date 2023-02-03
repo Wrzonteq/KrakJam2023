@@ -10,10 +10,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] Transform crosshairFollowTarget;
         // [SerializeField] Bullet bulletPrefab;
         [SerializeField] CinemachineVirtualCamera playerCamera;
-        [SerializeField] Animator animatorController;
+        // [SerializeField] Animator animatorController;
         [SerializeField] SpriteRenderer headRenderer;
-        [SerializeField] Sprite saneHeadSprite;
-        [SerializeField] Sprite insaneHeadSprite;
 
         [SerializeField] GameObject avatar;
 
@@ -48,8 +46,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void HandleStageChanged(GameStage stage) {
-            headRenderer.sprite = stage == GameStage.Sanity ? saneHeadSprite : insaneHeadSprite;
-            animatorController.SetBool("IsInsane", stage == GameStage.Insanity);
+            // headRenderer.sprite = stage == GameStage.Sanity ? saneHeadSprite : insaneHeadSprite;
+            // animatorController.SetBool("IsInsane", stage == GameStage.Insanity);
         }
 
         void HandleInteraction(InputAction.CallbackContext _) {
@@ -60,7 +58,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void Update() {
             if (!inputSystem.PlayerInputEnabled) {
                 selfRigidbody2D.velocity = Vector2.zero;
-                animatorController.SetBool("IsWalking", false);
+                // animatorController.SetBool("IsWalking", false);
                 return;
             }
             UpdateInputValues();
@@ -72,14 +70,13 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void UpdateInputValues() {
             move = inputSystem.Bindings.Gameplay.Move.ReadValue<Vector2>();
             isShooting = inputSystem.Bindings.Gameplay.Fire.IsPressed();
-            
         }
 
         void UpdateMovement() {
             var velocity = move * movementSpeed;
             selfRigidbody2D.velocity = velocity;
             var isWalking = velocity.sqrMagnitude > 0.01f;
-            animatorController.SetBool("IsWalking", isWalking);
+            // animatorController.SetBool("IsWalking", isWalking);
 
             if (isWalking) {
                 int rot = (move.x < 0) ? 180 : 0;

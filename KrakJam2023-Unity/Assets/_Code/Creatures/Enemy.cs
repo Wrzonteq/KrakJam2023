@@ -1,28 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Creature
-{
-    public int meleeDmg = 0;
-    public float meleeRng = 0f;
-    public float sightRng = 10f;
+namespace PartTimeKamikaze.KrakJam2023 {
+    public class Enemy : Creature {
+        [SerializeField] int meleeDmg = 0;
+        [SerializeField] float meleeRng = 0f;
+        [SerializeField] float sightRng = 10f;
 
-    private bool busy;
+        protected IEnemyBrain brain; //trzeba przypisac to pole, np. w klasie dziedziczacej albo dodac mu [SerializeField] i zrobic prefaby z mozgami i podpinac w edytorze
 
-    private void Die() {
-        Destroy(this.gameObject);
-    }
+        private bool busy;
 
-    private void TryHitPlayer() {
 
-    }
+        protected override void Die() {
+            Destroy(this.gameObject);
+        }
 
-    private void DecideAction() {
+        private void TryHitPlayer() {
+
+        }
+
+        private void DecideAction() {
         
+        }
+
+        private void GoTo(Vector2 position) {
+
+        }
+
+        void Update() {
+            //AI
+        }
     }
 
-    private void GoTo(Vector2 position) {
-
+    public interface IEnemyBrain {
+        //przykladowe metody
+        bool CanMove();
+        bool CanAttack();
+        bool IsPlayerInRange();
+        void Move(Vector2 position, float timeDelta);
     }
 }
