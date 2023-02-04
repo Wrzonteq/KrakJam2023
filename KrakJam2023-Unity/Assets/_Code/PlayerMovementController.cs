@@ -3,16 +3,15 @@ using UnityEngine.InputSystem;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class PlayerMovementController : MonoBehaviour {
-        [SerializeField] Rigidbody2D selfRigidbody2D;
-        [SerializeField] int moveForce = 10;
-        [SerializeField] int jumpForce = 20;
-
-        Vector3 move;
-        InputSystem inputSystem;
+        [SerializeField] CharacterController2D controller;
+        [SerializeField] float movmentSpeed = 40f;
+        public bool isJumping = false;
 
         public bool IsMoving { get; private set; }
         public bool IsFacingRight { get; private set; }
 
+        private Vector3 move;
+        private InputSystem inputSystem;
 
         public void Initialise() {
             inputSystem = GameSystems.GetSystem<InputSystem>();
@@ -25,29 +24,27 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 return;
             }
             UpdateInputValues();
-
+            if (IsFacingRight != true) {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            } else {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
         }
+
         void UpdateInputValues() {
             move = inputSystem.Bindings.Gameplay.Move.ReadValue<Vector2>();
             IsMoving = Mathf.Abs(move.x) > .5f;
-            IsFacingRight = move.x > 0;
+            IsFacingRight = move.x < 0;
         }
 
         void FixedUpdate() {
-            UpdateMovement();
+            controller.Move(move.x * movmentSpeed * Time.fixedDeltaTime, false, isJumping);
+            isJumping = false;
         }
-
-        void UpdateMovement() {
-            var moveVector = move * moveForce;
-            selfRigidbody2D.AddForce(new Vector2(moveVector.x, 0));
-        }
-        
 
         void HandleJump(InputAction.CallbackContext obj) {
-            if (!inputSystem.PlayerInputEnabled)
-                return;
-            Debug.Log($"Jump");
-            selfRigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            Debug.Log("JUMP");
+            isJumping = true;
         }
     }
 }
