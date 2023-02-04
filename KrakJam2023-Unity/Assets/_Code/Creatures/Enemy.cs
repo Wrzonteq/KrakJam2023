@@ -8,6 +8,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float sightRng = 0f;
         [SerializeField] float speed = 0f;
         [SerializeField] float maxVelocity = 0f;
+        [SerializeField] Animator anim;
 
 
         protected IEnemyBrain brain; //trzeba przypisac to pole, np. w klasie dziedziczacej albo dodac mu [SerializeField] i zrobic prefaby z mozgami i podpinac w edytorze
@@ -22,8 +23,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         private GameObject target;
         private float distanceToTarget;
 
-        private bool isRenderer = false;
-        private SpriteRenderer renderer;
+        private bool isAnimator = false;
 
 
 
@@ -47,19 +47,21 @@ namespace PartTimeKamikaze.KrakJam2023 {
         private void UpdateAttacking() {
             if (meleeAttacking) {
                 if (Time.time > resolveAttackTime) {
-                    if (Vector2.Distance(target.transform.position, transform.position) < meleeRng)
-                        target.GetComponent<Creature>().DealDamage(meleeDmg);
                     StopAttacking();
                 }
             }
         }
 
+        public void ResolveAttackNow() {
+            if (Vector2.Distance(target.transform.position, transform.position) < meleeRng)
+                target.GetComponent<Creature>().DealDamage(meleeDmg);
+        }
+
         private void UpdateAnimation() {
-            if (isRenderer)
-                if (meleeAttacking)
-                    renderer.color = Color.red;
-                else
-                    renderer.color = Color.white;
+            if (isAnimator) {
+                anim.SetBool("isAttacking", meleeAttacking);
+                anim.SetBool("isWalking", !meleeAttacking && rb.velocity.magnitude > 0.1);
+            }
         }
 
         private void StopAttacking() {
@@ -73,7 +75,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void Start() {
             isRigidBody = gameObject.TryGetComponent<Rigidbody2D>(out rb);
-            isRenderer = gameObject.TryGetComponent<SpriteRenderer>(out renderer);
+            isAnimator = anim != null;
             base.Start();
         }
 
