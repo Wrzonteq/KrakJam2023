@@ -18,7 +18,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         private bool meleeAttacking = false;
         private float resolveAttackTime;
-        //private bool busy = false; //u¿ywane przy ataku, po rozpoczêciu ataku musi go zakoñczyæ zanim zrobi coœ innego
 
         private GameObject target;
         private float distanceToTarget;
