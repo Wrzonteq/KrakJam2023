@@ -7,11 +7,15 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] int movementSpeed = 10;
         [SerializeField] Transform crosshairFollowTarget;
         [SerializeField] CinemachineVirtualCamera playerCamera;
-        // [SerializeField] Animator animatorController;
+        [SerializeField] Animator animatorController;
         [SerializeField] GameObject meleChargingAnimation;
         [SerializeField] GameObject rangedChargingAnimation;
         [SerializeField] GameObject avatar;
 
+        [SerializeField] float attackDuration;
+
+        bool isAttacking;
+        float inputUnlockTime;
         float shakeTimer;
         Vector3 move;
         InputSystem inputSystem;
@@ -32,32 +36,43 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void HandleMeleeAttack() {
-
+            inputUnlockTime = Time.time + attackDuration;
+            //todo find enemies in range and deal damage
+            animatorController.SetTrigger("AttackMelee");
         }
 
         void HandleStrongMeleeAttack(float chargingDuration) {
-
+            animatorController.SetBool("IsChargingMelee", false);
+            animatorController.SetTrigger("AttackMelee");
         }
 
         void HandleRangedAttack() {
-
+            inputUnlockTime = Time.time + attackDuration;
+            //todo find enemies in range and deal damage
+            animatorController.SetTrigger("AttackRange");
         }
 
         void HandleStrongRangedAttack(float chargingDuration) {
-
+            animatorController.SetBool("IsChargingRanged", false);
+            animatorController.SetTrigger("AttackRange");
         }
 
 
         void Update() {
             if (!inputSystem.PlayerInputEnabled) {
-                selfRigidbody2D.velocity = Vector2.zero;
-                // animatorController.SetBool("IsWalking", false);
+                animatorController.SetBool("IsWalking", false);
                 return;
             }
             UpdateInputValues();
+            if (inputUnlockTime > Time.time)
+                return;
             UpdateMovement();
+            UpdateChargingAnimations();
+        }
 
-            UpdateCamShake();
+        void UpdateChargingAnimations() {
+            animatorController.SetBool("IsChargingMelee", meleAttack.IsCharging);
+            animatorController.SetBool("IsChargingRanged", rangedAttack.IsCharging);
         }
 
         void UpdateInputValues() {
@@ -67,9 +82,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void UpdateMovement() {
             var velocity = move * movementSpeed;
-            selfRigidbody2D.velocity = velocity;
+            // selfRigidbody2D.velocity = velocity;
             var isWalking = velocity.sqrMagnitude > 0.01f;
-            // animatorController.SetBool("IsWalking", isWalking);
+            animatorController.SetBool("IsWalking", isWalking);
 
             if (isWalking) {
                 int rot = (move.x < 0) ? 180 : 0;
