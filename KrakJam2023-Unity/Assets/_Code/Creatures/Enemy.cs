@@ -61,6 +61,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
             if (isAnimator) {
                 anim.SetBool("isAttacking", meleeAttacking);
                 anim.SetBool("isWalking", !meleeAttacking && rb.velocity.magnitude > 0.1);
+                if (rb.velocity.x > 0) {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
+                } else if (rb.velocity.x < 0) {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
             }
         }
 
@@ -91,7 +96,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void FixedUpdate() {
-            if (rb.velocity.x > maxVelocity) {
+            if (Mathf.Abs(rb.velocity.x) > maxVelocity) {
                 rb.velocity = new Vector2( Mathf.Sign(rb.velocity.x) * maxVelocity, rb.velocity.y);
             }
         }

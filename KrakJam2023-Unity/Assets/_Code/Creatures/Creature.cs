@@ -10,7 +10,6 @@ public abstract class Creature : MonoBehaviour {
     public void DealDamage(int dmg) {
         CurrentHealth -= dmg;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
-        Debug.Log(CurrentHealth);
         if (CurrentHealth <= 0)
             Die();
     }
