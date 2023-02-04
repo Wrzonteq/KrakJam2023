@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -8,13 +9,13 @@ namespace PartTimeKamikaze.KrakJam2023 {
         InputSystem inputSystem;
         Action normalCallback;
         Action<float> strongCallback;
-        GameObject chargingVisuals;
+        ParticleSystem chargingVisuals;
         float chargingStartTime;
 
         public bool IsCharging { get; private set; }
 
 
-        public ChargeableSkillWrapper(InputAction action, Action normalCallback, Action<float> strongCallback, GameObject chargingVisuals) {
+        public ChargeableSkillWrapper(InputAction action, Action normalCallback, Action<float> strongCallback, ParticleSystem chargingVisuals) {
             inputSystem = GameSystems.GetSystem<InputSystem>();
             this.normalCallback = normalCallback;
             this.strongCallback = strongCallback;
@@ -55,13 +56,13 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void StartCharging() {
             IsCharging = true;
-            chargingVisuals.SetActive(true);
+            chargingVisuals.Play();
             chargingStartTime = Time.time;
         }
 
         void StopCharging() {
             IsCharging = false;
-            chargingVisuals.SetActive(false);
+            chargingVisuals.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }
 }

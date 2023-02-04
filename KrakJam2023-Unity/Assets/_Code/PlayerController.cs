@@ -5,8 +5,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
     public class PlayerController : MonoBehaviour {
         [SerializeField] CinemachineVirtualCamera playerCamera;
         [SerializeField] Animator animatorController;
-        [SerializeField] GameObject meleChargingAnimation;
-        [SerializeField] GameObject rangedChargingAnimation;
+        [SerializeField] ParticleSystem meleChargingAnimation;
+        [SerializeField] ParticleSystem rangedChargingAnimation;
         [SerializeField] GameObject avatar;
         [SerializeField] PlayerMovementController movement;
 
