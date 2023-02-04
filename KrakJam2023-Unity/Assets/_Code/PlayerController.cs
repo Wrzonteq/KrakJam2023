@@ -31,7 +31,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void HandleMeleeAttack() {
-            isAttacking = true;
             inputUnlockTime = Time.time + attackDuration;
             //todo find enemies in range and deal damage
             animatorController.SetTrigger("AttackMelee");
