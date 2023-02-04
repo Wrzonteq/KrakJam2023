@@ -3,13 +3,14 @@ using UnityEngine;
 public abstract class Creature : MonoBehaviour {
     [SerializeField] int maxHealth;
 
-
     public int MaxHealth => maxHealth;
-    public int CurrentHealth { get; private set; }
 
+    public int CurrentHealth { get; protected set; }
 
     public void DealDamage(int dmg) {
-        if ((CurrentHealth -= dmg) <= 0)
+        CurrentHealth -= dmg;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        if (CurrentHealth <= 0)
             Die();
     }
 
@@ -18,5 +19,8 @@ public abstract class Creature : MonoBehaviour {
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
 
+    protected void Start() {
+        CurrentHealth = MaxHealth;
+    }
     protected abstract void Die();
 }
