@@ -24,17 +24,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 return;
             }
             UpdateInputValues();
-            if (IsFacingRight != true) {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            } else {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            }
         }
 
         void UpdateInputValues() {
             move = inputSystem.Bindings.Gameplay.Move.ReadValue<Vector2>();
             IsMoving = Mathf.Abs(move.x) > .5f;
-            IsFacingRight = move.x < 0;
+            IsFacingRight = move.x > 0;
         }
 
         void FixedUpdate() {
