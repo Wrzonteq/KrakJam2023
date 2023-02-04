@@ -5451,6 +5451,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7839566317245767506}
   - component: {fileID: 7839566317245767508}
+  - component: {fileID: 2229483176831783391}
   - component: {fileID: 3609700340745382393}
   - component: {fileID: 4705058865068166828}
   m_Layer: 6
@@ -5490,13 +5491,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943cc53dd212c6c42a7c957ee259a914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfRigidbody2D: {fileID: 3609700340745382393}
-  movementSpeed: 10
-  crosshairFollowTarget: {fileID: 0}
   playerCamera: {fileID: 1199553985}
-  meleChargingAnimation: {fileID: 0}
+  animatorController: {fileID: 5059883710083496565}
+  meleChargingAnimation: {fileID: 3251791440289413983}
   rangedChargingAnimation: {fileID: 3251791440289413983}
-  avatar: {fileID: 0}
+  avatar: {fileID: 2723501252511992059}
+  movement: {fileID: 2229483176831783391}
+  attackDuration: 1
+--- !u!114 &2229483176831783391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839566317245767510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ecc8b7a5bdd4b74bb22d16ac24e8555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfRigidbody2D: {fileID: 3609700340745382393}
+  moveForce: 10
+  jumpForce: 20
 --- !u!50 &3609700340745382393
 Rigidbody2D:
   serializedVersion: 4
@@ -5516,7 +5532,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &4705058865068166828
 CapsuleCollider2D:

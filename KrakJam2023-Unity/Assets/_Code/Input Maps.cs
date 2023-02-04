@@ -82,6 +82,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""40fc1c4a-cf7f-4a6f-8637-a8b183acfa77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +322,17 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae4717b5-c50e-4277-a33c-bd874782c946"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -926,6 +946,7 @@ namespace UnityEngine.InputSystem
             m_Gameplay_MeleeAttack = m_Gameplay.FindAction("MeleeAttack", throwIfNotFound: true);
             m_Gameplay_OpenPauseMenu = m_Gameplay.FindAction("OpenPauseMenu", throwIfNotFound: true);
             m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+            m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
             // Interface
             m_Interface = asset.FindActionMap("Interface", throwIfNotFound: true);
             m_Interface_Navigate = m_Interface.FindAction("Navigate", throwIfNotFound: true);
@@ -1004,6 +1025,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Gameplay_MeleeAttack;
         private readonly InputAction m_Gameplay_OpenPauseMenu;
         private readonly InputAction m_Gameplay_Interact;
+        private readonly InputAction m_Gameplay_Jump;
         public struct GameplayActions
         {
             private @InputMaps m_Wrapper;
@@ -1014,6 +1036,7 @@ namespace UnityEngine.InputSystem
             public InputAction @MeleeAttack => m_Wrapper.m_Gameplay_MeleeAttack;
             public InputAction @OpenPauseMenu => m_Wrapper.m_Gameplay_OpenPauseMenu;
             public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
+            public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1041,6 +1064,9 @@ namespace UnityEngine.InputSystem
                     @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                     @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                     @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
+                    @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                    @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                    @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1063,6 +1089,9 @@ namespace UnityEngine.InputSystem
                     @Interact.started += instance.OnInteract;
                     @Interact.performed += instance.OnInteract;
                     @Interact.canceled += instance.OnInteract;
+                    @Jump.started += instance.OnJump;
+                    @Jump.performed += instance.OnJump;
+                    @Jump.canceled += instance.OnJump;
                 }
             }
         }
@@ -1233,6 +1262,7 @@ namespace UnityEngine.InputSystem
             void OnMeleeAttack(InputAction.CallbackContext context);
             void OnOpenPauseMenu(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
         public interface IInterfaceActions
         {
