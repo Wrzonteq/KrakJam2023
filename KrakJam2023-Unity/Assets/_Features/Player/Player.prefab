@@ -10002,6 +10002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2235810575057666981}
   - component: {fileID: 4942960048588736921}
+  - component: {fileID: 6767970426083339722}
   m_Layer: 3
   m_Name: Hit Point
   m_TagString: Untagged
@@ -10040,6 +10041,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6767970426083339722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3469597262075271482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bda1a91dda7df642893681212805c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staffTop: {fileID: 2235810575057666981}
+  vfx: {fileID: 8334944218908085460, guid: ea8b6a094c24526449bc5cc50715f2e8, type: 3}
+  duration: 2
 --- !u!1 &3617633205437039483
 GameObject:
   m_ObjectHideFlags: 0
@@ -10400,6 +10416,8 @@ MonoBehaviour:
   rangedChargingAnimation: {fileID: 6329535049534082801}
   avatar: {fileID: 2723501252511992059}
   movement: {fileID: 2229483176831783391}
+  staffController: {fileID: 6767970426083339722}
+  animationEvents: {fileID: 4310115597809891674}
   attackDuration: 1
 --- !u!114 &660666479160816318
 MonoBehaviour:
@@ -10442,7 +10460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 660666479160816318}
-  animator: {fileID: 5059883710083496565}
   movmentSpeed: 20
   isJumping: 0
 --- !u!50 &3609700340745382393

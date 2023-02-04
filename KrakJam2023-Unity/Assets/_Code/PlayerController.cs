@@ -9,7 +9,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] ParticleSystem rangedChargingAnimation;
         [SerializeField] GameObject avatar;
         [SerializeField] PlayerMovementController movement;
-
+        [SerializeField] StaffLightningController staffController;
+        [SerializeField] PlayerAnimationEventBroadcaster animationEvents;
         [SerializeField] float attackDuration;
 
         bool isAttacking;
@@ -28,11 +29,24 @@ namespace PartTimeKamikaze.KrakJam2023 {
             meleAttack = new(inputSystem.Bindings.Gameplay.MeleeAttack, HandleMeleeAttack, HandleStrongMeleeAttack, meleChargingAnimation);
             rangedAttack = new(inputSystem.Bindings.Gameplay.RangedAttack, HandleRangedAttack, HandleStrongRangedAttack, rangedChargingAnimation);
             cachedTransform = transform;
+            animationEvents.callBackOnBoink = OnBoink;
+            animationEvents.callBackOnFire = OnFire;
+        }
+
+        void OnFire() {
+            var enemy = FindObjectOfType<Enemy>();
+            if (enemy != null)
+                staffController.ShootTarget(enemy.transform);
+            else
+                Debug.LogError($"Enemy not found");
+        }
+
+        void OnBoink() {
+            //todo find enemies in range and deal damage
         }
 
         void HandleMeleeAttack() {
             inputUnlockTime = Time.time + attackDuration;
-            //todo find enemies in range and deal damage
             animatorController.SetTrigger("AttackMelee");
         }
 
@@ -43,7 +57,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void HandleRangedAttack() {
             inputUnlockTime = Time.time + attackDuration;
-            //todo find enemies in range and deal damage
             animatorController.SetTrigger("AttackRange");
         }
 
