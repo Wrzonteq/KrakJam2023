@@ -1,59 +1,52 @@
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class PlayerController : MonoBehaviour {
         [SerializeField] Rigidbody2D selfRigidbody2D;
         [SerializeField] int movementSpeed = 10;
         [SerializeField] Transform crosshairFollowTarget;
-        // [SerializeField] Bullet bulletPrefab;
         [SerializeField] CinemachineVirtualCamera playerCamera;
         // [SerializeField] Animator animatorController;
-        [SerializeField] SpriteRenderer headRenderer;
-
+        [SerializeField] GameObject meleChargingAnimation;
+        [SerializeField] GameObject rangedChargingAnimation;
         [SerializeField] GameObject avatar;
 
-        [SerializeField] float bulletSpeed = 6.66f;
-        [SerializeField] float shotsInterval = 0.2f;
-
         float shakeTimer;
-        float nextShotTime;
-        bool isShooting;
         Vector3 move;
-        List<IInteractable> interactablesInRange;
-        GameStateSystem gameStateSystem;
         InputSystem inputSystem;
         Transform cachedTransform;
+
+        ChargeableSkillWrapper meleAttack;
+        ChargeableSkillWrapper rangedAttack;
 
         public Transform CrosshairFollowTarget => crosshairFollowTarget;
 
 
         public void Initialise() {
-            gameStateSystem = GameSystems.GetSystem<GameStateSystem>();
             inputSystem = GameSystems.GetSystem<InputSystem>();
-            inputSystem.Bindings.Gameplay.Interact.performed += HandleInteraction;
-            interactablesInRange = new List<IInteractable>();
-            gameStateSystem.Stage.ChangedValue += HandleStageChanged;
+
+            meleAttack = new(inputSystem.Bindings.Gameplay.MeleeAttack, HandleMeleeAttack, HandleStrongMeleeAttack, meleChargingAnimation);
+            rangedAttack = new(inputSystem.Bindings.Gameplay.RangedAttack, HandleRangedAttack, HandleStrongRangedAttack, rangedChargingAnimation);
             cachedTransform = transform;
         }
 
-        void OnDestroy() {
-            gameStateSystem = GameSystems.GetSystem<GameStateSystem>();
-            inputSystem.Bindings.Gameplay.Interact.performed -= HandleInteraction;
-            gameStateSystem.Stage.ChangedValue -= HandleStageChanged;
+        void HandleMeleeAttack() {
+
         }
 
-        void HandleStageChanged(GameStage stage) {
-            // headRenderer.sprite = stage == GameStage.Sanity ? saneHeadSprite : insaneHeadSprite;
-            // animatorController.SetBool("IsInsane", stage == GameStage.Insanity);
+        void HandleStrongMeleeAttack(float chargingDuration) {
+
         }
 
-        void HandleInteraction(InputAction.CallbackContext _) {
-            if(interactablesInRange.Count > 0)
-                interactablesInRange[0].Interact();
+        void HandleRangedAttack() {
+
         }
+
+        void HandleStrongRangedAttack(float chargingDuration) {
+
+        }
+
 
         void Update() {
             if (!inputSystem.PlayerInputEnabled) {
@@ -63,13 +56,13 @@ namespace PartTimeKamikaze.KrakJam2023 {
             }
             UpdateInputValues();
             UpdateMovement();
-            UpdateShooting();
+
             UpdateCamShake();
         }
 
         void UpdateInputValues() {
             move = inputSystem.Bindings.Gameplay.Move.ReadValue<Vector2>();
-            isShooting = inputSystem.Bindings.Gameplay.Fire.IsPressed();
+            
         }
 
         void UpdateMovement() {
@@ -84,15 +77,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
             }
         }
 
-        void UpdateShooting() {
-            if (gameStateSystem.Stage.Value != GameStage.Insanity)
-                return;
-            if (!isShooting)
-                return;
-            if(nextShotTime <= Time.time)
-                Shoot();
-        }
-
         void UpdateCamShake() {
             if (shakeTimer > 0) {
                 shakeTimer -= Time.deltaTime;
@@ -104,11 +88,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void Shoot() {
-            nextShotTime = Time.time + shotsInterval;
-            // var bullet = Instantiate(bulletPrefab);
-            // bullet.transform.position = cachedTransform.position;
-
-            // bullet.Fire(GameSystems.GetSystem<CameraSystem>().CrosshairInstance.transform.localPosition, bulletSpeed);
             ShakeCamera(1f, .1f);
         }
 
@@ -116,14 +95,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
             var channelPerlin = playerCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             channelPerlin.m_AmplitudeGain = intensity;
             shakeTimer = time;
-        }
-
-        public void RegisterInteractable(IInteractable interactable) {
-            interactablesInRange.Insert(0, interactable);
-        }
-
-        public void UnregisterInteractable(IInteractable interactable) {
-            interactablesInRange.Remove(interactable);
         }
 
         public void Teleport(Vector3 position) {

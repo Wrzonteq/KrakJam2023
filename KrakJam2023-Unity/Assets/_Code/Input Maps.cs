@@ -48,12 +48,21 @@ namespace UnityEngine.InputSystem
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""RangedAttack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.4),SlowTap(duration=1)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""27965daa-7d0f-41f6-8bbc-edfb134c45f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap(duration=0.4),SlowTap(duration=1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -188,28 +197,6 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8"",
-                    ""path"": ""<XRController>/{Primary2DAxis}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3ea4d645-4504-4529-b061-ab81934c3752"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
@@ -232,23 +219,12 @@ namespace UnityEngine.InputSystem
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3e5f5442-8668-4b27-a940-df99bad7e831"",
-                    ""path"": ""<Joystick>/{Hatswitch}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""RangedAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -256,43 +232,21 @@ namespace UnityEngine.InputSystem
                     ""name"": """",
                     ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
+                    ""action"": ""RangedAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""id"": ""a026db4a-008e-44ff-af63-74781cb41317"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Fire"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""OpenPauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -337,6 +291,28 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""281be2bb-f651-4ed3-968d-f6d2f58eb24a"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30feef40-0b68-44a8-950f-623e229ad909"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MeleeAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -946,7 +922,8 @@ namespace UnityEngine.InputSystem
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
-            m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
+            m_Gameplay_RangedAttack = m_Gameplay.FindAction("RangedAttack", throwIfNotFound: true);
+            m_Gameplay_MeleeAttack = m_Gameplay.FindAction("MeleeAttack", throwIfNotFound: true);
             m_Gameplay_OpenPauseMenu = m_Gameplay.FindAction("OpenPauseMenu", throwIfNotFound: true);
             m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
             // Interface
@@ -1023,7 +1000,8 @@ namespace UnityEngine.InputSystem
         private IGameplayActions m_GameplayActionsCallbackInterface;
         private readonly InputAction m_Gameplay_Move;
         private readonly InputAction m_Gameplay_Look;
-        private readonly InputAction m_Gameplay_Fire;
+        private readonly InputAction m_Gameplay_RangedAttack;
+        private readonly InputAction m_Gameplay_MeleeAttack;
         private readonly InputAction m_Gameplay_OpenPauseMenu;
         private readonly InputAction m_Gameplay_Interact;
         public struct GameplayActions
@@ -1032,7 +1010,8 @@ namespace UnityEngine.InputSystem
             public GameplayActions(@InputMaps wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Gameplay_Move;
             public InputAction @Look => m_Wrapper.m_Gameplay_Look;
-            public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
+            public InputAction @RangedAttack => m_Wrapper.m_Gameplay_RangedAttack;
+            public InputAction @MeleeAttack => m_Wrapper.m_Gameplay_MeleeAttack;
             public InputAction @OpenPauseMenu => m_Wrapper.m_Gameplay_OpenPauseMenu;
             public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -1050,9 +1029,12 @@ namespace UnityEngine.InputSystem
                     @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                     @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                     @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                    @Fire.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
-                    @Fire.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
-                    @Fire.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
+                    @RangedAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRangedAttack;
+                    @RangedAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRangedAttack;
+                    @RangedAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRangedAttack;
+                    @MeleeAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMeleeAttack;
+                    @MeleeAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMeleeAttack;
+                    @MeleeAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMeleeAttack;
                     @OpenPauseMenu.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPauseMenu;
                     @OpenPauseMenu.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPauseMenu;
                     @OpenPauseMenu.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPauseMenu;
@@ -1069,9 +1051,12 @@ namespace UnityEngine.InputSystem
                     @Look.started += instance.OnLook;
                     @Look.performed += instance.OnLook;
                     @Look.canceled += instance.OnLook;
-                    @Fire.started += instance.OnFire;
-                    @Fire.performed += instance.OnFire;
-                    @Fire.canceled += instance.OnFire;
+                    @RangedAttack.started += instance.OnRangedAttack;
+                    @RangedAttack.performed += instance.OnRangedAttack;
+                    @RangedAttack.canceled += instance.OnRangedAttack;
+                    @MeleeAttack.started += instance.OnMeleeAttack;
+                    @MeleeAttack.performed += instance.OnMeleeAttack;
+                    @MeleeAttack.canceled += instance.OnMeleeAttack;
                     @OpenPauseMenu.started += instance.OnOpenPauseMenu;
                     @OpenPauseMenu.performed += instance.OnOpenPauseMenu;
                     @OpenPauseMenu.canceled += instance.OnOpenPauseMenu;
@@ -1244,7 +1229,8 @@ namespace UnityEngine.InputSystem
         {
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
-            void OnFire(InputAction.CallbackContext context);
+            void OnRangedAttack(InputAction.CallbackContext context);
+            void OnMeleeAttack(InputAction.CallbackContext context);
             void OnOpenPauseMenu(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
         }
