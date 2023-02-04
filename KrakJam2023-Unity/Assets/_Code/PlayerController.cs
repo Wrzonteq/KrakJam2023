@@ -49,11 +49,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         void Update() {
-            if (!inputSystem.PlayerInputEnabled) {
-                selfRigidbody2D.velocity = Vector2.zero;
-                // animatorController.SetBool("IsWalking", false);
-                return;
-            }
+            //if (!inputSystem.PlayerInputEnabled) {
+            //    selfRigidbody2D.velocity = Vector2.zero;
+            //    // animatorController.SetBool("IsWalking", false);
+            //    return;
+            //}
             UpdateInputValues();
             UpdateMovement();
 
