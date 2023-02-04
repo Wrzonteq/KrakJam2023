@@ -8,6 +8,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float sightRng = 0f;
         [SerializeField] float speed = 0f;
         [SerializeField] float maxVelocity = 0f;
+        [SerializeField] Animator anim;
 
 
         protected IEnemyBrain brain; //trzeba przypisac to pole, np. w klasie dziedziczacej albo dodac mu [SerializeField] i zrobic prefaby z mozgami i podpinac w edytorze
@@ -18,13 +19,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         private bool meleeAttacking = false;
         private float resolveAttackTime;
-        //private bool busy = false; //u¿ywane przy ataku, po rozpoczêciu ataku musi go zakoñczyæ zanim zrobi coœ innego
 
         private GameObject target;
         private float distanceToTarget;
 
-        private bool isRenderer = false;
-        private SpriteRenderer renderer;
+        private bool isAnimator = false;
 
 
 
@@ -38,7 +37,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         private void DecideAction() {
-            if (!meleeAttacking) 
+            if (!meleeAttacking)
                 if (distanceToTarget < meleeRng / 2)
                     TryHitPlayer();
                 else if (distanceToTarget < sightRng)
@@ -48,19 +47,26 @@ namespace PartTimeKamikaze.KrakJam2023 {
         private void UpdateAttacking() {
             if (meleeAttacking) {
                 if (Time.time > resolveAttackTime) {
-                    if (Vector2.Distance(target.transform.position, transform.position) < meleeRng)
-                        target.GetComponent<Creature>().DealDamage(meleeDmg);
                     StopAttacking();
                 }
             }
         }
 
+        public void ResolveAttackNow() {
+            if (Vector2.Distance(target.transform.position, transform.position) < meleeRng)
+                target.GetComponent<Creature>().DealDamage(meleeDmg);
+        }
+
         private void UpdateAnimation() {
-            if (isRenderer)
-                if (meleeAttacking)
-                    renderer.color = Color.red;
-                else
-                    renderer.color = Color.white;
+            if (isAnimator) {
+                anim.SetBool("isAttacking", meleeAttacking);
+                anim.SetBool("isWalking", !meleeAttacking && rb.velocity.magnitude > 0.1);
+                if (rb.velocity.x > 0) {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
+                } else if (rb.velocity.x < 0) {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
+            }
         }
 
         private void StopAttacking() {
@@ -68,21 +74,17 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         private void GoTo(Vector2 position) {
-            if (isRigidBody) {
+            if (isRigidBody)
                 rb.AddForce(new Vector2(Mathf.Sign(position.x - gameObject.transform.position.x) * speed, 0f));
-                //rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, 0, maxVelocity), rb.velocity.y);
-                Vector3.ClampMagnitude(rb.velocity, maxVelocity);
-            }
         }
 
         void Start() {
             isRigidBody = gameObject.TryGetComponent<Rigidbody2D>(out rb);
-            isRenderer = gameObject.TryGetComponent<SpriteRenderer>(out renderer);
+            isAnimator = anim != null;
             base.Start();
         }
 
-        void FixedUpdate() {
-            //AI
+        private void Update() {
             target = GameObject.FindGameObjectWithTag("Player");
             if (target != null) {
                 distanceToTarget = Vector2.Distance(target.transform.position, transform.position);
@@ -91,6 +93,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
             } else
                 StopAttacking();
             UpdateAnimation();
+        }
+
+        void FixedUpdate() {
+            if (Mathf.Abs(rb.velocity.x) > maxVelocity) {
+                rb.velocity = new Vector2( Mathf.Sign(rb.velocity.x) * maxVelocity, rb.velocity.y);
+            }
         }
     }
 
