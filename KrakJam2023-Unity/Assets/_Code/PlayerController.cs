@@ -82,7 +82,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void UpdateMovement() {
             var velocity = move * movementSpeed;
-            // selfRigidbody2D.velocity = velocity;
+            selfRigidbody2D.velocity = velocity;
             var isWalking = velocity.sqrMagnitude > 0.01f;
             animatorController.SetBool("IsWalking", isWalking);
 
