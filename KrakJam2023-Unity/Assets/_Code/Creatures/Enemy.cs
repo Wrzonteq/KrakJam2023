@@ -37,7 +37,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         private void DecideAction() {
-            if (!meleeAttacking) 
+            if (!meleeAttacking)
                 if (distanceToTarget < meleeRng / 2)
                     TryHitPlayer();
                 else if (distanceToTarget < sightRng)
@@ -67,11 +67,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         private void GoTo(Vector2 position) {
-            if (isRigidBody) {
+            if (isRigidBody)
                 rb.AddForce(new Vector2(Mathf.Sign(position.x - gameObject.transform.position.x) * speed, 0f));
-                //rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, 0, maxVelocity), rb.velocity.y);
-                Vector3.ClampMagnitude(rb.velocity, maxVelocity);
-            }
         }
 
         void Start() {
@@ -80,8 +77,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
             base.Start();
         }
 
-        void FixedUpdate() {
-            //AI
+        private void Update() {
             target = GameObject.FindGameObjectWithTag("Player");
             if (target != null) {
                 distanceToTarget = Vector2.Distance(target.transform.position, transform.position);
@@ -90,6 +86,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
             } else
                 StopAttacking();
             UpdateAnimation();
+        }
+
+        void FixedUpdate() {
+            if (rb.velocity.x > maxVelocity) {
+                rb.velocity = new Vector2( Mathf.Sign(rb.velocity.x) * maxVelocity, rb.velocity.y);
+            }
         }
     }
 
