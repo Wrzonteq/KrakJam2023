@@ -5452,7 +5452,7 @@ GameObject:
   - component: {fileID: 7839566317245767506}
   - component: {fileID: 7839566317245767508}
   - component: {fileID: 3609700340745382393}
-  - component: {fileID: 5134039511172365563}
+  - component: {fileID: 4705058865068166828}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5512,14 +5512,14 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5134039511172365563
-BoxCollider2D:
+--- !u!70 &4705058865068166828
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5531,19 +5531,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.092891276, y: 0.7276473}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.230204, y: 4.4185038}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.40383816, y: 1.1556451}
+  m_Size: {x: 1.0533254, y: 2.1349173}
+  m_Direction: 0
 --- !u!1 &8344146098987443595
 GameObject:
   m_ObjectHideFlags: 0
@@ -5813,6 +5803,14 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: 3094626b45ae5984b898a40c6884119b, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7552582706839291426, guid: 3094626b45ae5984b898a40c6884119b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7552582706839291426, guid: 3094626b45ae5984b898a40c6884119b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3094626b45ae5984b898a40c6884119b, type: 3}
       propertyPath: m_LocalPosition.x
