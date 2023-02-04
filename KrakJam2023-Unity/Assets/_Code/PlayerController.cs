@@ -13,7 +13,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float attackDuration;
 
         bool isAttacking;
-        bool isWalking;
         float inputUnlockTime;
         InputSystem inputSystem;
         Transform cachedTransform;
@@ -73,9 +72,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void UpdateVisuals() {
-            animatorController.SetBool("IsWalking", isWalking);
+            animatorController.SetBool("IsWalking", movement.IsMoving);
 
-            if (isWalking) {
+            if (movement.IsMoving) {
                 var rot = movement.IsFacingRight ? 0 : 180;
                 avatar.transform.rotation = Quaternion.Euler(0, rot, 0);
             }
