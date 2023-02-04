@@ -71,7 +71,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 return;
             }
 
-            animatorController.SetBool("IsWalking", movement.IsMoving);
             UpdateVisuals();
             // if (inputUnlockTime > Time.time)
                 // return;
@@ -86,10 +85,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void UpdateVisuals() {
             animatorController.SetBool("IsWalking", movement.IsMoving);
 
-            if (movement.IsMoving) {
-                var rot = movement.IsFacingRight ? 0 : 180;
-                avatar.transform.rotation = Quaternion.Euler(0, rot, 0);
-            }
+            //if (movement.IsMoving) {
+            //    var rot = movement.IsFacingRight ? 0 : 180;
+            //    avatar.transform.rotation = Quaternion.Euler(0, rot, 0);
+            //}
         }
 
         public void Teleport(Vector3 position) {
