@@ -8,7 +8,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] int magicDmg;
         [SerializeField] protected float magicTime = 0f;
 
-        protected bool magicAttacking;
+        protected bool magicAttacking = false;
 
         private void Update() {
             if (IsDead)
@@ -73,7 +73,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void UpdateAnimation() {
             animator.SetBool("isAttacking", meleeAttacking);
             animator.SetBool("isMagicAttacking", magicAttacking);
-            animator.SetBool("isWalking", !meleeAttacking && !magicAttacking && rigidbody.velocity.magnitude > 0.1);
+            animator.SetBool("isWalking", !meleeAttacking && !magicAttacking && rigidbody.velocity.magnitude > 0.01);
             if (turnRight)
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
             else
