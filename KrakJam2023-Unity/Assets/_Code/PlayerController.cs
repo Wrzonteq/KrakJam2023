@@ -22,7 +22,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         InputSystem inputSystem;
         Transform cachedTransform;
 
-
         public CinemachineVirtualCamera Camera => playerCamera;
         Vector3 ForwardVector => transform.localScale.x > 0 ? transform.right : -transform.right;
         public Vector3 Position => cachedTransform.position;
@@ -69,8 +68,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
             Debug.Log($"Hit {hits.Length} targets");
             foreach (var h in hits) {
                 var distanceVector = h.transform.position - transform.position;
-                var angle = Vector3.Angle(distanceVector.normalized, ForwardVector);
-                if(angle > aimConeAngle)
+                var absoluteAngle = Vector3.Angle(distanceVector.normalized, ForwardVector);
+                if(absoluteAngle > aimConeAngle)
                     continue;
                 var isEnemy = h.transform.CompareTag("Enemy");
                 if (isEnemy) {

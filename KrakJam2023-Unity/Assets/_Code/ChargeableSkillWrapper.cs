@@ -68,6 +68,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
             if (context.interaction is SlowTapInteraction) {
                 StopCharging();
                 startedActionsCount = 0;
+                animator.SetTrigger("CancelCharge");
             }
         }
 
