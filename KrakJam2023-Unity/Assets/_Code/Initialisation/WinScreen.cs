@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace PartTimeKamikaze.KrakJam2023.UI {
@@ -16,20 +15,21 @@ namespace PartTimeKamikaze.KrakJam2023.UI {
         }
 
         void HandleReturnButton() {
-            GameSystems.GetSystem<UISystem>().GetScreen<MainMenuScreen>().Show().Forget();
+            GameSystems.GetSystem<SceneLoadingSystem>().UnloadSceneAsync(Consts.ScenesNames.Gameplay).Forget();
+            GameSystems.GetSystem<UISystem>().ShowScreen<MainMenuScreen>();
             Hide().Forget();
         }
 
-        protected override void OnShow() {
-            GameSystems.GetSystem<InputSystem>().Bindings.Interface.Cancel.performed += HandleCancelInput;
-        }
-
-        void HandleCancelInput(InputAction.CallbackContext _) {
-            Hide().Forget();
-        }
-
-        protected override void OnHide() {
-            GameSystems.GetSystem<InputSystem>().Bindings.Interface.Cancel.performed -= HandleCancelInput;
-        }
+        // protected override void OnShow() {
+        //     GameSystems.GetSystem<InputSystem>().Bindings.Interface.Cancel.performed += HandleCancelInput;
+        // }
+        //
+        // void HandleCancelInput(InputAction.CallbackContext _) {
+        //     Hide().Forget();
+        // }
+        //
+        // protected override void OnHide() {
+        //     GameSystems.GetSystem<InputSystem>().Bindings.Interface.Cancel.performed -= HandleCancelInput;
+        // }
     }
 }

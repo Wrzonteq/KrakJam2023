@@ -32,7 +32,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         public void BlockMovement() {
             IsMoving = false;
             isJumping = false;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             controller.Block();
         }
 

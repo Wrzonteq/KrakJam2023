@@ -661,9 +661,9 @@ MonoBehaviour:
   sightRng: 15
   speed: 5
   maxVelocity: 2
-  magicRng: 10
+  magicRng: 7
   magicDmg: 1
-  magicTime: 0.8
+  magicTime: 2
   kulkaMocy: {fileID: 5762016543135521894, guid: 566850c290278114ba7b1aebd8eeb631, type: 3}
   kulkaPozycja: {fileID: 4139912093594916447}
 --- !u!50 &4139912093594916440

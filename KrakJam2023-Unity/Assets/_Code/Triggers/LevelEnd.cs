@@ -12,13 +12,13 @@ public class LevelEnd : MonoBehaviour {
             Debug.Log("WIn Condition");
             collision.GetComponent<PlayerMovementController>().BlockMovement();
             GameSystems.GetSystem<InputSystem>().DisableInput();
-            GameSystems.GetSystem<CameraSystem>().FocusOnMe(marchew, 10, WinGame).Forget();
+            GameSystems.GetSystem<CameraSystem>().FocusOnMe(marchew, 5, WinGame).Forget();
         }
     }
 
     public void WinGame() {
-        GameSystems.GetSystem<UISystem>().GetScreen<WinScreen>().Show().Forget();
         GameSystems.GetSystem<InputSystem>().SwitchToInterfaceInput();
+        GameSystems.GetSystem<UISystem>().GetScreen<WinScreen>().Show().Forget();
 
         return;
     }
