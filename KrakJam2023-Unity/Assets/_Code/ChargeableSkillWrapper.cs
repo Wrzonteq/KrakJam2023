@@ -4,53 +4,64 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
 namespace PartTimeKamikaze.KrakJam2023 {
+    [Serializable]
     public class ChargeableSkillWrapper {
-        Action startedCallback;
-        Action normalCallback;
-        Action<float> strongCallback;
-        ParticleSystem chargingVisuals;
-        float chargingStartTime;
-        PlayerController player;
+        public event Action StartedEvent;
+
+        [SerializeField] PlayerController player;
+        [SerializeField] Animator animator;
+        [SerializeField] InputActionReference actionRef;
+        [SerializeField] AttackType attackType;
+        [SerializeField] ParticleSystem chargingVisuals;
+        [SerializeField] int normalDamage;
+        [SerializeField] int strongDamage;
 
         int startedActionsCount;
 
-
         public bool IsCharging { get; private set; }
         public bool CurrentAttackIsStronk { get; private set; }
+        public int Damage => CurrentAttackIsStronk ? strongDamage : normalDamage;
 
 
-        public ChargeableSkillWrapper(InputAction action, Action startedCallback, Action normalCallback, Action<float> strongCallback, ParticleSystem chargingVisuals) {
-            player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
-            this.startedCallback = startedCallback;
-            this.normalCallback = normalCallback;
-            this.strongCallback = strongCallback;
-            this.chargingVisuals = chargingVisuals;
+        public void Init() {
+            var action = actionRef.action;
             action.started += OnStarted;
             action.performed += OnPerformed;
             action.canceled += OnCanceled;
+
+            var action2 = attackType == AttackType.Melee ? GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.MeleeAttack : GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.RangedAttack;
+            action2.started += OnStarted;
+            action2.performed += OnPerformed;
+            action2.canceled += OnCanceled;
+
+            Debug.Log($"{attackType} Init");
         }
 
         void OnStarted(InputAction.CallbackContext context) {
+            Debug.Log($"{attackType} OnStarted");
             if (player.IsInputLocked() && startedActionsCount == 0)
                 return;
             startedActionsCount++;
             if (context.interaction is SlowTapInteraction)
                 StartCharging();
-            startedCallback?.Invoke();
+            StartedEvent?.Invoke();
         }
 
         void OnPerformed(InputAction.CallbackContext context) {
+            Debug.Log($"OnPerformed");
             if (context.interaction is SlowTapInteraction) {
                 StopCharging();
-                var chargeDuration = Time.time - chargingStartTime;
-                strongCallback?.Invoke(chargeDuration);
+                PerformAttack();
                 CurrentAttackIsStronk = true;
             } else {
+                PerformAttack();
                 CurrentAttackIsStronk = false;
-                normalCallback?.Invoke();
             }
-
             startedActionsCount = 0;
+        }
+
+        void PerformAttack() {
+            animator.SetTrigger($"Attack{attackType}");
         }
 
         void OnCanceled(InputAction.CallbackContext context) {
@@ -63,11 +74,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void StartCharging() {
             IsCharging = true;
             chargingVisuals.Play();
-            chargingStartTime = Time.time;
+            animator.SetBool($"IsCharging{attackType}", true);
         }
 
         void StopCharging() {
             IsCharging = false;
+            animator.SetBool($"IsCharging{attackType}", false);
             chargingVisuals.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }

@@ -13,7 +13,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         public void ShootTarget(Transform newTarget, bool stronk) {
-            Debug.Log($"Shoot at {newTarget.gameObject.name}");
             target = newTarget;
             isPlaying = true;
             var newInstance = Instantiate(vfx);

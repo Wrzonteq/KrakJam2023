@@ -73,6 +73,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void Update() {
+            if (IsDead)
+                return;
             if(!player)
                 player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             if (player && !player.IsDead) {
@@ -85,6 +87,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void FixedUpdate() {
+            if (IsDead)
+                return;
             if (Mathf.Abs(rigidbody.velocity.x) > maxVelocity)
                 rigidbody.velocity = new Vector2(Mathf.Sign(rigidbody.velocity.x) * maxVelocity, rigidbody.velocity.y);
         }

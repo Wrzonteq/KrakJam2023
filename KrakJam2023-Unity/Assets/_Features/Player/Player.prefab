@@ -10413,15 +10413,30 @@ MonoBehaviour:
   maxHealth: 10
   playerCamera: {fileID: 1199553985}
   animatorController: {fileID: 5059883710083496565}
-  meleChargingAnimation: {fileID: 339193193015706713}
-  rangedChargingAnimation: {fileID: 6329535049534082801}
   avatar: {fileID: 2723501252511992059}
   movement: {fileID: 2229483176831783391}
   staffController: {fileID: 6767970426083339722}
   animationEvents: {fileID: 4310115597809891674}
   attackDuration: 1
-  meleeRange: 0.5
-  maxRange: 3
+  meleeRange: 1
+  maxRange: 5
+  aimConeAngle: 30
+  meleAttack:
+    player: {fileID: 7839566317245767508}
+    animator: {fileID: 5059883710083496565}
+    actionRef: {fileID: -4317403544171680224, guid: 935eec26e8644e64ca396d0f105b5c6c, type: 3}
+    attackType: 0
+    chargingVisuals: {fileID: 339193193015706713}
+    normalDamage: 1
+    strongDamage: 4
+  rangedAttack:
+    player: {fileID: 7839566317245767508}
+    animator: {fileID: 5059883710083496565}
+    actionRef: {fileID: 1120369429361536294, guid: 935eec26e8644e64ca396d0f105b5c6c, type: 3}
+    attackType: 1
+    chargingVisuals: {fileID: 6329535049534082801}
+    normalDamage: 1
+    strongDamage: 3
 --- !u!114 &660666479160816318
 MonoBehaviour:
   m_ObjectHideFlags: 0
