@@ -85,8 +85,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void Update() {
-            if (!inputSystem.PlayerInputEnabled || IsInputLocked())
-                return;
+
             UpdateVisuals();
         }
 
