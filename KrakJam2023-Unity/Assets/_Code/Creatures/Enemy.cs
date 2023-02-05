@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         protected override void Die() {
             Debug.Log("Dieded");
-            animator.SetBool("IsDead", true);
+            animator.SetBool("isDead", true);
             collider.enabled = false;
             DestroyAfterDelay().Forget();
         }
@@ -30,7 +31,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
         async UniTaskVoid DestroyAfterDelay() {
             //todo jakas animacja dezintegracji (shader graph) jesli zdazymy
             await UniTask.Delay(5000);
-            Destroy(gameObject);
+            try {
+                Destroy(gameObject);
+            } catch (Exception) {
+                // ignored
+            }
         }
 
         protected void TryHitPlayer() {

@@ -111,5 +111,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
         public bool IsInputLocked() {
             return attackAnimationInProgress;
         }
+
+        void OnDestroy() {
+            meleAttack.Uninit();
+            rangedAttack.Uninit();
+        }
     }
 }
