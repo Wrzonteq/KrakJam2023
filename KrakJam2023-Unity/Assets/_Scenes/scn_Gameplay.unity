@@ -102860,6 +102860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wyjec (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4139912093594916446, guid: 63672cba05a224549bd206966a5982e2, type: 3}
+      propertyPath: sightRng
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4139912093594916447, guid: 63672cba05a224549bd206966a5982e2, type: 3}
       propertyPath: m_RootOrder
       value: 5

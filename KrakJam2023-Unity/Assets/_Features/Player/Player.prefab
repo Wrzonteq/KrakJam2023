@@ -10419,12 +10419,11 @@ MonoBehaviour:
   animationEvents: {fileID: 4310115597809891674}
   attackDuration: 1
   meleeRange: 1
-  maxRange: 5
-  aimConeAngle: 45
+  maxRange: 7
+  aimConeAngle: 70
   meleAttack:
     player: {fileID: 7839566317245767508}
     animator: {fileID: 5059883710083496565}
-    actionRef: {fileID: -4317403544171680224, guid: 935eec26e8644e64ca396d0f105b5c6c, type: 3}
     attackType: 0
     chargingVisuals: {fileID: 339193193015706713}
     normalDamage: 1
@@ -10432,7 +10431,6 @@ MonoBehaviour:
   rangedAttack:
     player: {fileID: 7839566317245767508}
     animator: {fileID: 5059883710083496565}
-    actionRef: {fileID: 1120369429361536294, guid: 935eec26e8644e64ca396d0f105b5c6c, type: 3}
     attackType: 1
     chargingVisuals: {fileID: 6329535049534082801}
     normalDamage: 1

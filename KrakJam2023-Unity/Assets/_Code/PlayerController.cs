@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public enum AttackType { Melee = 0, Ranged = 1 }
@@ -64,7 +65,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void OnFire() {
-            var hits = Physics2D.CircleCastAll(transform.position, 1.5f, ForwardVector, maxRange);
+            var hits = Physics2D.OverlapCircleAll(transform.position, maxRange);
             Debug.Log($"Hit {hits.Length} targets");
             foreach (var h in hits) {
                 var distanceVector = h.transform.position - transform.position;
@@ -104,7 +105,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
             inputSystem.DisableInput();
             animatorController.SetBool("IsDead", true);
 
-            //todo load gameover screen, switch to interface input
+            GameSystems.GetSystem<GameplaySystem>().ReturnToMenu(3).Forget();
         }
 
         public bool IsInputLocked() {

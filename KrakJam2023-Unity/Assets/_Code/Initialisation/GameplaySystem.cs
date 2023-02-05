@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using PartTimeKamikaze.KrakJam2023.UI;
+using PartTimeKamikaze.KrakJam2023.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -85,8 +86,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
             GameSystems.GetSystem<UISystem>().GetScreen<LoadingScreen>().SetProgress(progress);
         }
 
-        public async UniTaskVoid ReturnToMenu() {
+        public async UniTaskVoid ReturnToMenu(float delay = 0) {
             IsInGameplay = false;
+            await UniTask.Delay(Utilities.SecondsToMiliseconds(delay));
             GameSystems.GetSystem<UISystem>().GetScreen<LoadingScreen>().Show(true).Forget();
             GameSystems.GetSystem<UISystem>().HideScreen<HUDScreen>().Forget();
             var sceneLoadingSystem = GameSystems.GetSystem<SceneLoadingSystem>();
