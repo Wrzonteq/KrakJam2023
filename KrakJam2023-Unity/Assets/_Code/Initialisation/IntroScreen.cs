@@ -4,11 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace PartTimeKamikaze.KrakJam2023.UI {
     public class IntroScreen : UiScreenBase, IPointerClickHandler {
-        [SerializeField] Image[] slides;
+        [SerializeField] CanvasGroup[] slides;
         [SerializeField] TextMeshProUGUI skipLabel;
         [SerializeField] float slideFadeInDuration = 1f;
         [SerializeField] float slideDuration = 3f;
@@ -21,6 +20,8 @@ namespace PartTimeKamikaze.KrakJam2023.UI {
             GameSystems.GetSystem<InputSystem>().Bindings.Interface.Continue.performed += HandleContinue;
             awaitingSecondInput = false;
             skipLabel.alpha = 0;
+            foreach (var slide in slides)
+                slide.alpha = 0;
         }
 
         void HandleContinue(InputAction.CallbackContext _) {
