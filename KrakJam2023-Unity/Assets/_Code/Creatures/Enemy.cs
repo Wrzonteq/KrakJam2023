@@ -55,6 +55,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         public void ResolveAttackNow() {
             if (Vector2.Distance(player.Position, transform.position) < meleeRng)
                 player.GetComponent<Creature>().DealDamage(meleeDmg);
+            StopAttacking();
         }
 
         void UpdateAnimation() {
