@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class Enemy : Creature {
-        [SerializeField] Rigidbody2D rigidbody;
-        [SerializeField] Animator animator;
-        [SerializeField] int meleeDmg = 0;
-        [SerializeField] float meleeRng = 0f;
-        [SerializeField] float meleeTime = 0f;
-        [SerializeField] float sightRng = 0f;
-        [SerializeField] float speed = 0f;
-        [SerializeField] float maxVelocity = 0f;
+        [SerializeField] protected Rigidbody2D rigidbody;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected int meleeDmg = 0;
+        [SerializeField] protected float meleeRng = 0f;
+        [SerializeField] protected float meleeTime = 0f;
+        [SerializeField] protected float sightRng = 0f;
+        [SerializeField] protected float speed = 0f;
+        [SerializeField] protected float maxVelocity = 0f;
 
-        bool meleeAttacking;
-        float endAttackTime;
-        float distanceToTarget;
-        PlayerController player;
-        bool turnRight;
+        protected bool meleeAttacking;
+        protected float endAttackTime;
+        protected float distanceToTarget;
+        protected PlayerController player;
+        protected bool turnRight;
 
 
         protected override void Die() {
@@ -30,7 +30,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
             Destroy(gameObject);
         }
 
-        void TryHitPlayer() {
+        protected void TryHitPlayer() {
             meleeAttacking = true;
             endAttackTime = Time.time + meleeTime;
         }
@@ -65,7 +65,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        void StopAttacking() {
+        protected void StopAttacking() {
             meleeAttacking = false;
         }
 
@@ -80,7 +80,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             if (player && !player.IsDead) {
                 distanceToTarget = Vector2.Distance(player.Position, transform.position);
-                if (player.transform.position.x > transform.position.x)
+                if (player.Position.x > transform.position.x)
                     turnRight = true;
                 else
                     turnRight = false;
