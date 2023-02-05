@@ -613,9 +613,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4139912093594916447}
+  - component: {fileID: 4139912093594916446}
   - component: {fileID: 4139912093594916440}
   - component: {fileID: 4139912093594916441}
-  - component: {fileID: 4139912093594916446}
   m_Layer: 0
   m_Name: Wyjec
   m_TagString: Enemy
@@ -639,6 +639,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4139912093594916446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139912093594916442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8de5a82b58cebf46b0d54d1f3ea5c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  rigidbody: {fileID: 4139912093594916440}
+  collider: {fileID: 4139912093594916441}
+  animator: {fileID: 4139912091995640825}
+  meleeDmg: 1
+  meleeRng: 2
+  meleeTime: 0.4
+  sightRng: 10
+  speed: 5
+  maxVelocity: 2
+  magicRng: 5
+  magicDmg: 1
+  magicTime: 0.8
+  kulkaMocy: {fileID: 5762016543135521894, guid: 566850c290278114ba7b1aebd8eeb631, type: 3}
+  kulkaPozycja: {fileID: 4139912093594916447}
 --- !u!50 &4139912093594916440
 Rigidbody2D:
   serializedVersion: 4

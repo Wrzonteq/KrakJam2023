@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PartTimeKamikaze.KrakJam2023 {
     public class Enemy : Creature {
         [SerializeField] protected Rigidbody2D rigidbody;
+        [SerializeField] protected Collider2D collider;
         [SerializeField] protected Animator animator;
         [SerializeField] protected int meleeDmg = 0;
         [SerializeField] protected float meleeRng = 0f;
@@ -22,6 +23,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         protected override void Die() {
             Debug.Log("Dieded");
             animator.SetBool("IsDead", true);
+            collider.enabled = false;
             DestroyAfterDelay().Forget();
         }
 

@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   rigidbody: {fileID: 7285571270500003872}
+  collider: {fileID: 7285571270500003873}
   animator: {fileID: 7285571269750684422}
   meleeDmg: 1
   meleeRng: 3

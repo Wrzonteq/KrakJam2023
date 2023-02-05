@@ -10420,7 +10420,7 @@ MonoBehaviour:
   attackDuration: 1
   meleeRange: 1
   maxRange: 5
-  aimConeAngle: 30
+  aimConeAngle: 45
   meleAttack:
     player: {fileID: 7839566317245767508}
     animator: {fileID: 5059883710083496565}
