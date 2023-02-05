@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 3499413883
+    locked: 0
   - name: Addons
     uniqueID: 2903289437
     locked: 0
