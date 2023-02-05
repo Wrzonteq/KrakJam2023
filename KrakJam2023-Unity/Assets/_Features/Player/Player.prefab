@@ -10055,7 +10055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staffTop: {fileID: 2235810575057666981}
   vfx: {fileID: 8334944218908085460, guid: ea8b6a094c24526449bc5cc50715f2e8, type: 3}
-  duration: 2
+  duration: 0.5
 --- !u!1 &3617633205437039483
 GameObject:
   m_ObjectHideFlags: 0
@@ -10410,6 +10410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943cc53dd212c6c42a7c957ee259a914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 10
   playerCamera: {fileID: 1199553985}
   animatorController: {fileID: 5059883710083496565}
   meleChargingAnimation: {fileID: 339193193015706713}

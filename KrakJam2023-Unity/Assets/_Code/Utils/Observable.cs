@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace PartTimeKamikaze.KrakJam2023.Utils {
     public class Observable <T> {
@@ -29,6 +30,26 @@ namespace PartTimeKamikaze.KrakJam2023.Utils {
 
         public void SilentSet(T newValue) {
             value = newValue;
+        }
+    }
+
+    public static class Extensions {
+        public static void SetLocalScaleX(this Transform transform, float scaleX) {
+            var scale = transform.localScale;
+            scale.x = scaleX;
+            transform.localScale = scale;
+        }
+
+        public static void SetLocalScaleY(this Transform transform, float scaleY) {
+            var scale = transform.localScale;
+            scale.y = scaleY;
+            transform.localScale = scale;
+        }
+
+        public static void SetLocalScaleZ(this Transform transform, float scaleZ) {
+            var scale = transform.localScale;
+            scale.z = scaleZ;
+            transform.localScale = scale;
         }
     }
 }

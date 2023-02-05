@@ -1,3 +1,4 @@
+using PartTimeKamikaze.KrakJam2023.Utils;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -15,7 +16,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         public void SetLength(float length) {
-            vfx.transform.localScale = new Vector3(1, 1, length);
+            vfx.transform.SetLocalScaleZ(length);
+        }
+
+        public void SetWidth(float width) {
+            vfx.transform.SetLocalScaleX(width);
         }
     }
 }

@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 
 namespace PartTimeKamikaze.KrakJam2023 {
-    public class PlayerController : MonoBehaviour {
+    public class PlayerController : Creature {
         [SerializeField] CinemachineVirtualCamera playerCamera;
         [SerializeField] Animator animatorController;
         [SerializeField] ParticleSystem meleChargingAnimation;
@@ -35,9 +35,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void OnFire() {
             var enemy = FindObjectOfType<Enemy>();
-            if (enemy != null)
-                staffController.ShootTarget(enemy.transform);
-            else
+            if (enemy != null) {
+                staffController.ShootTarget(enemy.transform, rangedAttack.CurrentAttackIsStronk);
+                enemy.DealDamage(rangedAttack.CurrentAttackIsStronk ? 3 : 1);
+            } else
                 Debug.LogError($"Enemy not found");
         }
 
@@ -96,6 +97,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
             var playerToCameraOffset = cachedTransform.position - mainCameraTransform.position;
             cachedTransform.position = position;
             mainCameraTransform.position = position - playerToCameraOffset;
+        }
+
+        protected override void Die() {
+            inputSystem.DisableInput();
+            animatorController.SetBool("IsDead", true);
         }
     }
 }

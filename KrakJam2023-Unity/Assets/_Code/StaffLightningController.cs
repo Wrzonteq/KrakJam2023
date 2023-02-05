@@ -7,40 +7,44 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] LightningVfx vfx;
         [SerializeField] float duration;
 
-        LightningVfx instance;
+        LightningVfx currentInstance;
         Transform target;
         bool isPlaying;
 
 
-        public void ShootTarget(Transform newTarget) {
+        public void ShootTarget(Transform newTarget, bool stronk) {
             Debug.Log($"Shoot at {newTarget.gameObject.name}");
             target = newTarget;
-            PlayAndStopAfterDuration().Forget();
+            isPlaying = true;
+            var newInstance = Instantiate(vfx);
+            currentInstance = newInstance;
+            currentInstance.Play();
+            DestroyAfterDuration(newInstance).Forget();
+            if(stronk)
+                currentInstance.SetWidth(1.5f);
         }
 
-        async UniTaskVoid PlayAndStopAfterDuration() {
-            isPlaying = true;
-            instance = Instantiate(vfx);
-            instance.Play();
+        async UniTaskVoid DestroyAfterDuration(LightningVfx instance) {
             await UniTask.Delay((int)(duration * 1000));
             instance.Stop();
             Destroy(instance.gameObject);
             isPlaying = false;
         }
 
+
         void Update() {
             if (!isPlaying)
                 return;
-            if (!instance)
+            if (!currentInstance)
                 return;
             var fromStaffToTarget = target.position - staffTop.position;
-            var angle = Vector3.Angle(fromStaffToTarget, Vector3.right);
-            if (angle < 0)
-                angle = 360 - angle;
+            var rotation = Quaternion.LookRotation(fromStaffToTarget.normalized);
             var midpoint = staffTop.position + fromStaffToTarget / 2;
-            instance.transform.position = midpoint;
-            instance.transform.eulerAngles = new Vector3(0, 0, 90 * angle);
-            instance.SetLength(fromStaffToTarget.magnitude);
+            currentInstance.transform.position = midpoint;
+            var instanceRotation = currentInstance.transform.rotation;
+            instanceRotation.z = rotation.z;
+            currentInstance.transform.rotation = instanceRotation;
+            currentInstance.SetLength(fromStaffToTarget.magnitude);
         }
     }
 }

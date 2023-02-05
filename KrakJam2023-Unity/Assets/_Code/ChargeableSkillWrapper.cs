@@ -1,5 +1,4 @@
 using System;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -12,7 +11,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
         ParticleSystem chargingVisuals;
         float chargingStartTime;
 
+
         public bool IsCharging { get; private set; }
+        public bool CurrentAttackIsStronk { get; private set; }
 
 
         public ChargeableSkillWrapper(InputAction action, Action normalCallback, Action<float> strongCallback, ParticleSystem chargingVisuals) {
@@ -42,7 +43,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 StopCharging();
                 var chargeDuration = Time.time - chargingStartTime;
                 strongCallback?.Invoke(chargeDuration);
+                CurrentAttackIsStronk = true;
             } else {
+                CurrentAttackIsStronk = false;
                 normalCallback?.Invoke();
             }
         }
