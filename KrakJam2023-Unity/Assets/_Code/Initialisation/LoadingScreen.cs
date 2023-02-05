@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace PartTimeKamikaze.KrakJam2023.UI {
     public class LoadingScreen : UiScreenBase {
-        [SerializeField] TextMeshProUGUI label;
         [SerializeField] Image loadingBarFill;
 
         int lastProgress = -1;
@@ -15,7 +14,6 @@ namespace PartTimeKamikaze.KrakJam2023.UI {
             if (percentage == lastProgress)
                 return; // to optimise gui redraws
             lastProgress = percentage;
-            label.text = $"{lastProgress}%";
             loadingBarFill.fillAmount = progress;
         }
 
