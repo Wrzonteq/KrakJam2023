@@ -1,9 +1,11 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class Enemy : Creature {
         [SerializeField] protected Rigidbody2D rigidbody;
+        [SerializeField] protected Collider2D collider;
         [SerializeField] protected Animator animator;
         [SerializeField] protected int meleeDmg = 0;
         [SerializeField] protected float meleeRng = 0f;
@@ -20,14 +22,20 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         protected override void Die() {
-            animator.SetBool("IsDead", true);
+            Debug.Log("Dieded");
+            animator.SetBool("isDead", true);
+            collider.enabled = false;
             DestroyAfterDelay().Forget();
         }
 
         async UniTaskVoid DestroyAfterDelay() {
             //todo jakas animacja dezintegracji (shader graph) jesli zdazymy
             await UniTask.Delay(5000);
-            Destroy(gameObject);
+            try {
+                Destroy(gameObject);
+            } catch (Exception) {
+                // ignored
+            }
         }
 
         protected void TryHitPlayer() {
@@ -65,7 +73,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        protected void StopAttacking() {
+        void StopAttacking() {
             meleeAttacking = false;
         }
 
@@ -74,8 +82,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void Update() {
-            if (IsDead)
+            if (IsDead) {
+                StopAttacking();
+                UpdateAnimation();
                 return;
+            }
             if(!player)
                 player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             if (player && !player.IsDead) {

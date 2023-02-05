@@ -11,10 +11,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         [SerializeField] PlayerController playerPrefab;
 
+        bool isInGameplay;
 
         public PlayerController PlayerInstance { get; private set; }
 
-        bool isInGameplay;
         public bool IsInGameplay { get =>  isInGameplay;
             private set {
                 isInGameplay = value;
@@ -25,8 +25,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
             }
         }
 
-        public override void OnCreate() {
-        }
+
+        public override void OnCreate() { }
 
         public override void Initialise() { }
 
@@ -38,7 +38,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
             GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.OpenPauseMenu.performed -= OpenPauseScreen;
         }
 
-        public void StartNewGame() {
+        public async UniTaskVoid StartNewGame() {
+            var uiSystem = GameSystems.GetSystem<UISystem>();
+            await uiSystem.ShowScreen<IntroScreen>();
+            await uiSystem.GetScreen<IntroScreen>().StartSlideShow();
+            uiSystem.HideScreen<IntroScreen>();
             GameSystems.GetSystem<GameStateSystem>().ResetGameState();
             LoadSavedGame(GameSystems.GetSystem<GameStateSystem>().runtimeGameState).Forget();
         }
@@ -52,7 +56,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         async UniTask LoadGameplaySceneAndShowProgress() {
             GameSystems.GetSystem<UISystem>().GetScreen<MainMenuScreen>().Hide(true).Forget();
             var sceneLoadingSystem = GameSystems.GetSystem<SceneLoadingSystem>();
-            GameSystems.GetSystem<UISystem>().GetScreen<LoadingScreen>().Show(true).Forget();
+            await GameSystems.GetSystem<UISystem>().ShowScreen<LoadingScreen>(true);
             sceneLoadingSystem.SceneLoadingProgress.ChangedValue += DisplayProgress;
             await sceneLoadingSystem.LoadSceneAsync(Consts.ScenesNames.Gameplay);
             sceneLoadingSystem.SceneLoadingProgress.ChangedValue -= DisplayProgress;
@@ -63,8 +67,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void LoadGame(GameStateDataAsset gameState) {
             GameSystems.GetSystem<GameStateSystem>().LoadCurrentStateToProperties();
             SpawnPlayer();
-            // GameSystems.GetSystem<CameraSystem>().SetupCrosshairFollowTarget(PlayerInstance.CrosshairFollowTarget);
-            
             IsInGameplay = true;
         }
 

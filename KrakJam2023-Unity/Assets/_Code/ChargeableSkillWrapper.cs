@@ -10,7 +10,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         [SerializeField] PlayerController player;
         [SerializeField] Animator animator;
-        [SerializeField] InputActionReference actionRef;
         [SerializeField] AttackType attackType;
         [SerializeField] ParticleSystem chargingVisuals;
         [SerializeField] int normalDamage;
@@ -24,17 +23,17 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         public void Init() {
-            var action = actionRef.action;
-            action.started += OnStarted;
-            action.performed += OnPerformed;
-            action.canceled += OnCanceled;
-
             var action2 = attackType == AttackType.Melee ? GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.MeleeAttack : GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.RangedAttack;
             action2.started += OnStarted;
             action2.performed += OnPerformed;
             action2.canceled += OnCanceled;
+        }
 
-            Debug.Log($"{attackType} Init");
+        public void Uninit() {
+            var action2 = attackType == AttackType.Melee ? GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.MeleeAttack : GameSystems.GetSystem<InputSystem>().Bindings.Gameplay.RangedAttack;
+            action2.started -= OnStarted;
+            action2.performed -= OnPerformed;
+            action2.canceled -= OnCanceled;
         }
 
         void OnStarted(InputAction.CallbackContext context) {
@@ -68,6 +67,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
             if (context.interaction is SlowTapInteraction) {
                 StopCharging();
                 startedActionsCount = 0;
+                animator.SetTrigger("CancelCharge");
             }
         }
 
