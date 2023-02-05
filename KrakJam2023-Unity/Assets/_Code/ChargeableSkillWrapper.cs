@@ -12,6 +12,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         float chargingStartTime;
         PlayerController player;
 
+        int startedActionsCount;
+
 
         public bool IsCharging { get; private set; }
         public bool CurrentAttackIsStronk { get; private set; }
@@ -29,15 +31,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void OnStarted(InputAction.CallbackContext context) {
-            if (player.IsInputLocked())
+            if (player.IsInputLocked() && startedActionsCount == 0)
                 return;
-            if (context.interaction is SlowTapInteraction) {
+            startedActionsCount++;
+            if (context.interaction is SlowTapInteraction)
                 StartCharging();
-                startedCallback?.Invoke();
-
-            } else {
-                startedCallback?.Invoke();
-            }
+            startedCallback?.Invoke();
         }
 
         void OnPerformed(InputAction.CallbackContext context) {
@@ -50,11 +49,15 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 CurrentAttackIsStronk = false;
                 normalCallback?.Invoke();
             }
+
+            startedActionsCount = 0;
         }
 
         void OnCanceled(InputAction.CallbackContext context) {
-            if (context.interaction is SlowTapInteraction)
+            if (context.interaction is SlowTapInteraction) {
                 StopCharging();
+                startedActionsCount = 0;
+            }
         }
 
         void StartCharging() {
