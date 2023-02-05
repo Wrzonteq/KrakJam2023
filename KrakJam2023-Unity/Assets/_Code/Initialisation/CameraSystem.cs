@@ -15,7 +15,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         public override void OnCreate() {
             MainCamera = Instantiate(mainCameraPrefab);
-            GameSystems.GetSystem<GameplaySystem>().PlayerInstantiatedEvent += HandlePlayerInstantiated;
         }
 
         void HandlePlayerInstantiated(PlayerController player) {
@@ -23,6 +22,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         public override void Initialise() {
+            GameSystems.GetSystem<GameplaySystem>().PlayerInstantiatedEvent += HandlePlayerInstantiated;
             // CrosshairInstance = Instantiate(crosshairPrefab, MainCamera.transform, false);
         }
 
