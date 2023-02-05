@@ -15,6 +15,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         public override void OnCreate() {
             MainCamera = Instantiate(mainCameraPrefab);
+            GameSystems.GetSystem<GameplaySystem>().PlayerInstantiatedEvent += HandlePlayerInstantiated;
+        }
+
+        void HandlePlayerInstantiated(PlayerController player) {
+            virtualCamera = player.Camera;
         }
 
         public override void Initialise() {

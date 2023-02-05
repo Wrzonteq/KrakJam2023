@@ -23,6 +23,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         Transform cachedTransform;
 
 
+        public CinemachineVirtualCamera Camera => playerCamera;
         Vector3 ForwardVector => transform.localScale.x > 0 ? transform.right : -transform.right;
         public Vector3 Position => cachedTransform.position;
 
