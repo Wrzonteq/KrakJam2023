@@ -7,25 +7,31 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float magicRng;
         [SerializeField] int magicDmg;
         [SerializeField] protected float magicTime = 0f;
+        [SerializeField] GameObject kulkaMocy;
+        [SerializeField] Transform kulkaPozycja;
 
         protected bool magicAttacking = false;
 
         private void Update() {
-            if (IsDead)
-                return;
-            if (!player)
-            player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
-            if (player && !player.IsDead) {
-                distanceToTarget = Vector2.Distance(player.Position, transform.position);
-                if (player.Position.x > transform.position.x)
-                    turnRight = true;
-                else
-                    turnRight = false;
-                DecideAction();
-                UpdateAttacking();
-            } else
+            if (IsDead) {
                 StopAttacking();
-            UpdateAnimation();
+                return;
+            } else {
+                if (!player)
+                    player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
+                if (player && !player.IsDead) {
+                    distanceToTarget = Vector2.Distance(player.Position, transform.position);
+                    if (player.Position.x > transform.position.x)
+                        turnRight = true;
+                    else
+                        turnRight = false;
+                    DecideAction();
+                    UpdateAttacking();
+                } else
+                    StopAttacking();
+                UpdateAnimation();
+            }
+            
         }
 
         private void FixedUpdate() {
@@ -52,6 +58,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         public void ResolveMagicAttackNow() {
             if (Vector2.Distance(player.Position, transform.position) < magicRng) {
+                Instantiate(kulkaMocy, kulkaPozycja.position, Quaternion.Euler(0f,0f,0f));
                 player.GetComponent<Creature>().DealDamage(magicDmg);
             }
         }
@@ -73,7 +80,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void UpdateAnimation() {
             animator.SetBool("isAttacking", meleeAttacking);
             animator.SetBool("isMagicAttacking", magicAttacking);
-            animator.SetBool("isWalking", !meleeAttacking && !magicAttacking && rigidbody.velocity.magnitude > 0.01);
+            animator.SetBool("isWalking", !meleeAttacking && !magicAttacking && rigidbody.velocity.magnitude > 0.001);
             if (turnRight)
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
             else
