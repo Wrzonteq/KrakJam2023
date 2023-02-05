@@ -20,6 +20,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         protected override void Die() {
+            Debug.Log("Dieded");
             animator.SetBool("IsDead", true);
             DestroyAfterDelay().Forget();
         }
@@ -65,7 +66,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        protected void StopAttacking() {
+        void StopAttacking() {
             meleeAttacking = false;
         }
 
@@ -74,8 +75,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void Update() {
-            if (IsDead)
+            if (IsDead) {
+                StopAttacking();
+                UpdateAnimation();
                 return;
+            }
             if(!player)
                 player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             if (player && !player.IsDead) {

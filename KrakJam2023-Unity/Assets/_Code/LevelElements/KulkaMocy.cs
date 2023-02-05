@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class KulkaMocy : MonoBehaviour {
-        // Start is called before the first frame update
-        void Start() {
-            GetComponent<Rigidbody2D>().velocity = (GameSystems.GetSystem<GameplaySystem>().PlayerInstance.Position - transform.position) * 10;
+        Vector3 velocity;
+        void Update() {
+            GetComponent<Rigidbody2D>().velocity = velocity;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision) {
+        private void Start() {
+            velocity = (GameSystems.GetSystem<GameplaySystem>().PlayerInstance.Position - transform.position) * 20;
+            DestroyAfterDelay();
+        }
+
+        async UniTaskVoid DestroyAfterDelay() {
+            //todo jakas animacja dezintegracji (shader graph) jesli zdazymy
+            await UniTask.Delay(100);
             Destroy(gameObject);
         }
     }

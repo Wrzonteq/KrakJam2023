@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d863f5e417bd22b40b8ce3c962c46bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 3
   rigidbody: {fileID: 7285571270500003872}
   animator: {fileID: 7285571269750684422}
   meleeDmg: 1

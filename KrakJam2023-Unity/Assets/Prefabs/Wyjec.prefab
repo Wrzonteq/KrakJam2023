@@ -698,20 +698,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8de5a82b58cebf46b0d54d1f3ea5c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 1
   rigidbody: {fileID: 4139912093594916440}
   animator: {fileID: 4139912091995640825}
   meleeDmg: 1
-  meleeRng: 3
-  meleeTime: 1
-  sightRng: 20
+  meleeRng: 2
+  meleeTime: 0.4
+  sightRng: 10
   speed: 5
   maxVelocity: 2
   magicRng: 5
   magicDmg: 1
-  magicTime: 2
+  magicTime: 0.8
   kulkaMocy: {fileID: 5762016543135521894, guid: 566850c290278114ba7b1aebd8eeb631, type: 3}
-  kulkaPozycja: {fileID: 2925163015737575121}
+  kulkaPozycja: {fileID: 4139912093594916447}
 --- !u!1 &4139912093765518184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,11 +1521,6 @@ Transform:
 --- !u!4 &1739696038594704589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6820903630629378270, guid: bfc90ef4dcf7b0448a55a94421134036, type: 3}
-  m_PrefabInstance: {fileID: 4139912091995640815}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2925163015737575121 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -7932061193989483202, guid: bfc90ef4dcf7b0448a55a94421134036, type: 3}
   m_PrefabInstance: {fileID: 4139912091995640815}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3182746398730350178 stripped
