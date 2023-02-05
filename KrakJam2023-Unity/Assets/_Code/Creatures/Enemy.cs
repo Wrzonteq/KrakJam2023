@@ -12,7 +12,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] protected float speed = 0f;
         [SerializeField] protected float maxVelocity = 0f;
 
-        protected bool meleeAttacking;
+        protected bool meleeAttacking = false;
         protected float endAttackTime;
         protected float distanceToTarget;
         protected PlayerController player;
