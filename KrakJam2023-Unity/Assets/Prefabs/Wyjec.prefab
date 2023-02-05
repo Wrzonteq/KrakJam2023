@@ -658,10 +658,10 @@ MonoBehaviour:
   meleeDmg: 1
   meleeRng: 2
   meleeTime: 0.4
-  sightRng: 10
+  sightRng: 15
   speed: 5
   maxVelocity: 2
-  magicRng: 5
+  magicRng: 10
   magicDmg: 1
   magicTime: 0.8
   kulkaMocy: {fileID: 5762016543135521894, guid: 566850c290278114ba7b1aebd8eeb631, type: 3}
