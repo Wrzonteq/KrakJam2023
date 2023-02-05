@@ -10421,6 +10421,7 @@ MonoBehaviour:
   animationEvents: {fileID: 4310115597809891674}
   attackDuration: 1
   meleeRange: 0
+  maxRange: 0
 --- !u!114 &660666479160816318
 MonoBehaviour:
   m_ObjectHideFlags: 0

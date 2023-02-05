@@ -13,6 +13,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] PlayerAnimationEventBroadcaster animationEvents;
         [SerializeField] float attackDuration;
         [SerializeField] float meleeRange;
+        [SerializeField] float maxRange;
 
         bool attackAnimationInProgress;
 
@@ -56,7 +57,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void OnBoink() {
-            var hits = Physics2D.CircleCastAll(transform.position, meleeRange, transform.forward);
+            var pointAtHalfMeleeDistanceInFront = transform.position + ForwardVector *meleeRange/2;
+            var hits = Physics2D.CircleCastAll(pointAtHalfMeleeDistanceInFront, meleeRange, ForwardVector);
             foreach (var h in hits) {
                 var isEnemy = h.transform.CompareTag("Enemy");
                 if (isEnemy) {
@@ -67,13 +69,28 @@ namespace PartTimeKamikaze.KrakJam2023 {
             //todo find enemies in range and deal damage
         }
 
+        float aimConeAngle = 30f;
+        Vector3 ForwardVector => transform.localScale.x > 0 ? transform.right : -transform.right;
+
         void OnFire() {
-            var enemy = FindObjectOfType<Enemy>();
-            if (enemy != null) {
-                staffController.ShootTarget(enemy.transform, rangedAttack.CurrentAttackIsStronk);
-                enemy.DealDamage(rangedAttack.CurrentAttackIsStronk ? 3 : 1);
-            } else
-                Debug.LogError($"Enemy not found");
+            var hits = Physics2D.CircleCastAll(transform.position, maxRange * 2, ForwardVector);
+            Debug.Log($"Hit {hits.Length} targets");
+            foreach (var h in hits) {
+                var distanceVector = h.transform.position - transform.position;
+                var angle = Vector3.Angle(distanceVector.normalized, ForwardVector);
+                Debug.Log($"Angle is {angle}");
+                if(angle > aimConeAngle)
+                    continue;
+                var isEnemy = h.transform.CompareTag("Enemy");
+                Debug.Log($"Enemy found!");
+                if (isEnemy) {
+                    var enemy = h.transform.GetComponent<Enemy>();
+                    staffController.ShootTarget(enemy.transform, rangedAttack.CurrentAttackIsStronk);
+                    enemy.DealDamage(rangedAttack.CurrentAttackIsStronk ? 3 : 1);
+                    break;
+                }
+                Debug.Log($"No enemies found!");
+            }
         }
 
         void HandleMeleeAttack() {
@@ -132,4 +149,3 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
     }
 }
-    
