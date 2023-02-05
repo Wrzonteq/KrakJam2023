@@ -7,6 +7,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float magicRng;
         [SerializeField] int magicDmg;
         [SerializeField] protected float magicTime = 0f;
+        [SerializeField] GameObject kulkaMocy;
+        [SerializeField] Transform kulkaPozycja;
 
         protected bool magicAttacking = false;
 
@@ -52,6 +54,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         public void ResolveMagicAttackNow() {
             if (Vector2.Distance(player.Position, transform.position) < magicRng) {
+                Instantiate(kulkaMocy, kulkaPozycja.position, Quaternion.Euler(0f,0f,0f));
                 player.GetComponent<Creature>().DealDamage(magicDmg);
             }
         }
