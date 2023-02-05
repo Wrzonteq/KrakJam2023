@@ -29,6 +29,13 @@ namespace PartTimeKamikaze.KrakJam2023 {
             UpdateInputValues();
         }
 
+        public void BlockMovement() {
+            IsMoving = false;
+            isJumping = false;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            controller.Block();
+        }
+
         void UpdateInputValues() {
             move = inputSystem.Bindings.Gameplay.Move.ReadValue<Vector2>();
             IsMoving = Mathf.Abs(move.x) > .5f;

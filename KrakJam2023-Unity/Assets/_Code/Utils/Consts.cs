@@ -2,6 +2,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
     public static class Consts {
         public static class ScenesNames {
             public static string Gameplay => "scn_Gameplay";
+            //public static string WinGame => "scn_Win";
+            //public static string LoosGame => "scn_Loos";
         }
 
         public static class DefaultValues {
