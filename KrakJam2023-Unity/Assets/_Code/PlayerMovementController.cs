@@ -10,11 +10,14 @@ namespace PartTimeKamikaze.KrakJam2023 {
         public bool IsMoving { get; private set; }
         public bool IsFacingRight { get; private set; }
 
-        private Vector3 move;
-        private InputSystem inputSystem;
+        Vector3 move;
+        InputSystem inputSystem;
+        PlayerController player;
+
 
         public void Initialise() {
             inputSystem = GameSystems.GetSystem<InputSystem>();
+            player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             inputSystem.Bindings.Gameplay.Jump.performed += HandleJump;
         }
 
@@ -33,6 +36,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void FixedUpdate() {
+            if(player.IsInputLocked())
+                return;
             controller.Move(move.x * movmentSpeed * Time.fixedDeltaTime, false, isJumping);
             isJumping = false;
         }

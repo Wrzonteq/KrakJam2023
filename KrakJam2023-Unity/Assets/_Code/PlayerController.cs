@@ -12,9 +12,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] StaffLightningController staffController;
         [SerializeField] PlayerAnimationEventBroadcaster animationEvents;
         [SerializeField] float attackDuration;
+        [SerializeField] float meleeRange;
 
-        bool isAttacking;
-        float inputUnlockTime;
+        bool attackAnimationInProgress;
+
         InputSystem inputSystem;
         Transform cachedTransform;
 
@@ -26,11 +27,44 @@ namespace PartTimeKamikaze.KrakJam2023 {
             inputSystem = GameSystems.GetSystem<InputSystem>();
             movement.Initialise();
 
-            meleAttack = new(inputSystem.Bindings.Gameplay.MeleeAttack, HandleMeleeAttack, HandleStrongMeleeAttack, meleChargingAnimation);
-            rangedAttack = new(inputSystem.Bindings.Gameplay.RangedAttack, HandleRangedAttack, HandleStrongRangedAttack, rangedChargingAnimation);
+            meleAttack = new(
+                inputSystem.Bindings.Gameplay.MeleeAttack,
+                HandleAttackStarted,
+                HandleMeleeAttack,
+                HandleStrongMeleeAttack,
+                meleChargingAnimation);
+            rangedAttack = new(
+                inputSystem.Bindings.Gameplay.RangedAttack,
+                HandleAttackStarted,
+                HandleRangedAttack,
+                HandleStrongRangedAttack,
+                rangedChargingAnimation);
+
             cachedTransform = transform;
             animationEvents.callBackOnBoink = OnBoink;
             animationEvents.callBackOnFire = OnFire;
+            PlayerIdleStateBehaviour.IdleStateEntered += HandleIdleStateEntered;
+        }
+
+        void HandleAttackStarted() {
+            attackAnimationInProgress = true;
+            Debug.Log($"Attack is now in progress!");
+        }
+
+        void HandleIdleStateEntered() {
+            attackAnimationInProgress = false;
+        }
+
+        void OnBoink() {
+            var hits = Physics2D.CircleCastAll(transform.position, meleeRange, transform.forward);
+            foreach (var h in hits) {
+                var isEnemy = h.transform.CompareTag("Enemy");
+                if (isEnemy) {
+                    var enemy = h.transform.GetComponent<Enemy>();
+                    enemy.DealDamage(meleAttack.CurrentAttackIsStronk ? 3 : 1);
+                }
+            }
+            //todo find enemies in range and deal damage
         }
 
         void OnFire() {
@@ -42,12 +76,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 Debug.LogError($"Enemy not found");
         }
 
-        void OnBoink() {
-            //todo find enemies in range and deal damage
-        }
-
         void HandleMeleeAttack() {
-            inputUnlockTime = Time.time + attackDuration;
             animatorController.SetTrigger("AttackMelee");
         }
 
@@ -57,7 +86,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void HandleRangedAttack() {
-            inputUnlockTime = Time.time + attackDuration;
             animatorController.SetTrigger("AttackRange");
         }
 
@@ -68,13 +96,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
 
         void Update() {
-            if (!inputSystem.PlayerInputEnabled) {
+            if (!inputSystem.PlayerInputEnabled || IsInputLocked()) {
                 return;
             }
-
             UpdateVisuals();
-            // if (inputUnlockTime > Time.time)
-                // return;
             UpdateChargingAnimations();
         }
 
@@ -85,11 +110,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void UpdateVisuals() {
             animatorController.SetBool("IsWalking", movement.IsMoving);
-
-            //if (movement.IsMoving) {
-            //    var rot = movement.IsFacingRight ? 0 : 180;
-            //    avatar.transform.rotation = Quaternion.Euler(0, rot, 0);
-            //}
         }
 
         public void Teleport(Vector3 position) {
@@ -100,8 +120,15 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         protected override void Die() {
+            PlayerIdleStateBehaviour.IdleStateEntered -= HandleIdleStateEntered;
             inputSystem.DisableInput();
             animatorController.SetBool("IsDead", true);
+
+            //todo load gameover screen, switch to interface input
+        }
+
+        public bool IsInputLocked() {
+            return attackAnimationInProgress;
         }
     }
 }

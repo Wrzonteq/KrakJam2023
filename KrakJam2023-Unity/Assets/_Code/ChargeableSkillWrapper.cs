@@ -5,19 +5,21 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace PartTimeKamikaze.KrakJam2023 {
     public class ChargeableSkillWrapper {
-        InputSystem inputSystem;
+        Action startedCallback;
         Action normalCallback;
         Action<float> strongCallback;
         ParticleSystem chargingVisuals;
         float chargingStartTime;
+        PlayerController player;
 
 
         public bool IsCharging { get; private set; }
         public bool CurrentAttackIsStronk { get; private set; }
 
 
-        public ChargeableSkillWrapper(InputAction action, Action normalCallback, Action<float> strongCallback, ParticleSystem chargingVisuals) {
-            inputSystem = GameSystems.GetSystem<InputSystem>();
+        public ChargeableSkillWrapper(InputAction action, Action startedCallback, Action normalCallback, Action<float> strongCallback, ParticleSystem chargingVisuals) {
+            player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
+            this.startedCallback = startedCallback;
             this.normalCallback = normalCallback;
             this.strongCallback = strongCallback;
             this.chargingVisuals = chargingVisuals;
@@ -27,18 +29,18 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void OnStarted(InputAction.CallbackContext context) {
-            if (!inputSystem.PlayerInputEnabled)
+            if (player.IsInputLocked())
                 return;
-            if (context.interaction is SlowTapInteraction)
+            if (context.interaction is SlowTapInteraction) {
                 StartCharging();
-            else {
+                startedCallback?.Invoke();
 
+            } else {
+                startedCallback?.Invoke();
             }
         }
 
         void OnPerformed(InputAction.CallbackContext context) {
-            if (!inputSystem.PlayerInputEnabled)
-                return;
             if (context.interaction is SlowTapInteraction) {
                 StopCharging();
                 var chargeDuration = Time.time - chargingStartTime;
@@ -51,8 +53,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void OnCanceled(InputAction.CallbackContext context) {
-            if (!inputSystem.PlayerInputEnabled)
-                return;
             if (context.interaction is SlowTapInteraction)
                 StopCharging();
         }

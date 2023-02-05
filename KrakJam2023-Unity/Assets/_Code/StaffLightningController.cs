@@ -35,7 +35,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void Update() {
             if (!isPlaying)
                 return;
-            if (!currentInstance)
+            if (!currentInstance || !target)
                 return;
             var fromStaffToTarget = target.position - staffTop.position;
             var rotation = Quaternion.LookRotation(fromStaffToTarget.normalized);
