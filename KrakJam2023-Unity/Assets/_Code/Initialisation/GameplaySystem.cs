@@ -69,7 +69,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void SpawnPlayer() {
-            PlayerInstance = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            GameObject[] spawne_points = GameObject.FindGameObjectsWithTag("PlayerSpawnPoint");
+            PlayerInstance = Instantiate(playerPrefab, spawne_points[0].transform.position, Quaternion.identity);
             PlayerInstance.Initialise();
             PlayerInstantiatedEvent?.Invoke(PlayerInstance);
         }

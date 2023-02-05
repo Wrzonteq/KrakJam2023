@@ -20,6 +20,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private Vector3 m_Velocity = Vector3.zero;
+        private bool blocked = false;
 
         [Header("Events")]
         [Space]
@@ -41,8 +42,16 @@ namespace PartTimeKamikaze.KrakJam2023 {
             if (OnCrouchEvent == null)
                 OnCrouchEvent = new BoolEvent();
         }
+        public void Block() {
+            blocked = true;
+            m_Rigidbody2D.velocity = new Vector3(0f, 0f, 0f);
+
+        }
 
         private void FixedUpdate() {
+            if (blocked == true)
+                return;
+
             bool wasGrounded = m_Grounded;
             m_Grounded = false;
 
