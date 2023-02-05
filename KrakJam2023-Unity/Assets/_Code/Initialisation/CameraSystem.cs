@@ -5,12 +5,10 @@ using UnityEngine;
 namespace PartTimeKamikaze.KrakJam2023 {
     public class CameraSystem : BaseGameSystem {
         [SerializeField] Camera mainCameraPrefab;
-        // [SerializeField] CrosshairController crosshairPrefab;
 
         CinemachineVirtualCamera virtualCamera;
 
         public Camera MainCamera { get; private set; }
-        // public CrosshairController CrosshairInstance { get; private set; }
 
 
         public override void OnCreate() {
@@ -23,12 +21,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         public override void Initialise() {
             GameSystems.GetSystem<GameplaySystem>().PlayerInstantiatedEvent += HandlePlayerInstantiated;
-            // CrosshairInstance = Instantiate(crosshairPrefab, MainCamera.transform, false);
-        }
-
-
-        public void SetupCrosshairFollowTarget(Transform followTarget) {
-            // CrosshairInstance.Setup(MainCamera, followTarget);
         }
 
         public async UniTaskVoid FocusOnMe(Transform target, float duration) {

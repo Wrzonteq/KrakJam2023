@@ -52,4 +52,10 @@ namespace PartTimeKamikaze.KrakJam2023.Utils {
             transform.localScale = scale;
         }
     }
+
+    public static class Utilities {
+        public static int SecondsToMiliseconds(float seconds) {
+            return (int)(seconds * 1000);
+        }
+    }
 }
