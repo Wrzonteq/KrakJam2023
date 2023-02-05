@@ -26,11 +26,11 @@ namespace PartTimeKamikaze.KrakJam2023 {
             // CrosshairInstance.Setup(MainCamera, followTarget);
         }
 
-        public async UniTaskVoid FocusOnMe(Transform target) {
+        public async UniTaskVoid FocusOnMe(Transform target, float duration) {
             GameSystems.GetSystem<InputSystem>().DisableInput();
             var followBackup = virtualCamera.Follow;
             virtualCamera.Follow = target;
-            await UniTask.Delay(2000);
+            await UniTask.Delay((int)(duration * 1000));
             virtualCamera.Follow = followBackup;
             GameSystems.GetSystem<InputSystem>().SwitchToGameplayInput();
         }
