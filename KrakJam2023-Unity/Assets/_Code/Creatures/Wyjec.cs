@@ -8,8 +8,8 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] int magicDmg;
         [SerializeField] protected float magicTime = 0f;
 
-
         protected bool magicAttacking;
+
         private void Update() {
             if (IsDead)
                 return;
@@ -37,7 +37,6 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void DecideAction() {
             if (!meleeAttacking && !magicAttacking) {
-                Debug.Log("22222222222");
                 if (distanceToTarget < meleeRng)
                     TryHitPlayer();
                 else if (distanceToTarget < magicRng)
@@ -52,8 +51,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         public void ResolveMagicAttackNow() {
-            if (Vector2.Distance(player.Position, transform.position) < meleeRng)
+            if (Vector2.Distance(player.Position, transform.position) < magicRng) {
                 player.GetComponent<Creature>().DealDamage(magicDmg);
+            }
         }
 
         protected void StopAttacking() {
@@ -67,7 +67,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         void GoTo(Vector2 position) {
-            rigidbody.AddForce(new Vector2(Mathf.Sign(position.x - gameObject.transform.position.x) * speed, 0f));
+            rigidbody.AddForce((position - (Vector2)gameObject.transform.position) * speed);
         }
 
         void UpdateAnimation() {

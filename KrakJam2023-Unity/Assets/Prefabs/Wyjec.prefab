@@ -707,7 +707,7 @@ MonoBehaviour:
   sightRng: 20
   speed: 5
   maxVelocity: 2
-  magicRng: 10
+  magicRng: 5
   magicDmg: 1
   magicTime: 2
 --- !u!1 &4139912093765518184
@@ -1601,6 +1601,18 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
+--- !u!114 &6899013506896353210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4509268446359335506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e83033bb4d6426f42a3c06bd80001f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6032472609908317210 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7693355417021534197, guid: bfc90ef4dcf7b0448a55a94421134036, type: 3}
