@@ -10420,8 +10420,8 @@ MonoBehaviour:
   staffController: {fileID: 6767970426083339722}
   animationEvents: {fileID: 4310115597809891674}
   attackDuration: 1
-  meleeRange: 0
-  maxRange: 0
+  meleeRange: 0.5
+  maxRange: 3
 --- !u!114 &660666479160816318
 MonoBehaviour:
   m_ObjectHideFlags: 0

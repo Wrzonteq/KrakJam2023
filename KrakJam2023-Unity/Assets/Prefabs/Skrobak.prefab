@@ -297,9 +297,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7285571270500003875}
+  - component: {fileID: 7285571270500004060}
   - component: {fileID: 7285571270500003873}
   - component: {fileID: 7285571270500003872}
-  - component: {fileID: 7285571270500004060}
   m_Layer: 0
   m_Name: Skrobak
   m_TagString: Enemy
@@ -323,6 +323,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7285571270500004060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7285571270500003879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d863f5e417bd22b40b8ce3c962c46bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  rigidbody: {fileID: 7285571270500003872}
+  animator: {fileID: 7285571269750684422}
+  meleeDmg: 1
+  meleeRng: 3
+  meleeTime: 0.4
+  sightRng: 10
+  speed: 20
+  maxVelocity: 1
 --- !u!61 &7285571270500003873
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -370,26 +391,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7285571270500004060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7285571270500003879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d863f5e417bd22b40b8ce3c962c46bd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 10
-  meleeDmg: 1
-  meleeRng: 3
-  meleeTime: 0.4
-  sightRng: 10
-  speed: 20
-  maxVelocity: 1
-  anim: {fileID: 7285571269750684422}
 --- !u!1 &7285571270611846621
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +735,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7221020487405985688, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.6689467
+      objectReference: {fileID: 0}
+    - target: {fileID: -7221020487405985688, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000030920236
+      objectReference: {fileID: 0}
+    - target: {fileID: -7221020487405985688, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.95751625
       objectReference: {fileID: 0}
@@ -790,8 +799,20 @@ PrefabInstance:
       value: 0.7774145
       objectReference: {fileID: 0}
     - target: {fileID: -1819529356487467196, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1819529356487467196, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1819529356487467196, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.6289886
+      objectReference: {fileID: 0}
+    - target: {fileID: -1819529356487467196, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1191849182063020649, guid: 2a11cc2b13d5f684dbea2f74e54d752d, type: 3}
       propertyPath: m_Bounds.m_Center.x

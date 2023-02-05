@@ -19,8 +19,9 @@ public abstract class Creature : MonoBehaviour {
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
 
-    protected void Start() {
+    protected virtual void Start() {
         CurrentHealth = MaxHealth;
     }
+
     protected abstract void Die();
 }

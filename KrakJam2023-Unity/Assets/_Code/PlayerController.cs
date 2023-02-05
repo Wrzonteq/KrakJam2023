@@ -23,6 +23,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
         ChargeableSkillWrapper meleAttack;
         ChargeableSkillWrapper rangedAttack;
 
+        public Vector3 Position => cachedTransform.position;
+        public bool IsDead { get; private set; }
+
 
         public void Initialise() {
             inputSystem = GameSystems.GetSystem<InputSystem>();
@@ -137,6 +140,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
         }
 
         protected override void Die() {
+            IsDead = true;
             PlayerIdleStateBehaviour.IdleStateEntered -= HandleIdleStateEntered;
             inputSystem.DisableInput();
             animatorController.SetBool("IsDead", true);
