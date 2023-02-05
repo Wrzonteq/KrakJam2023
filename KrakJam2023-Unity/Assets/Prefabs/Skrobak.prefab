@@ -341,7 +341,7 @@ MonoBehaviour:
   meleeDmg: 1
   meleeRng: 3
   meleeTime: 0.4
-  sightRng: 10
+  sightRng: 7
   speed: 20
   maxVelocity: 1
 --- !u!61 &7285571270500003873

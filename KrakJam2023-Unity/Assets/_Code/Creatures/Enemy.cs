@@ -13,9 +13,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
         [SerializeField] float maxVelocity = 0f;
 
         bool meleeAttacking;
-        float resolveAttackTime;
+        float endAttackTime;
         float distanceToTarget;
         PlayerController player;
+        bool turnRight;
 
 
         protected override void Die() {
@@ -31,12 +32,12 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void TryHitPlayer() {
             meleeAttacking = true;
-            resolveAttackTime = Time.time + meleeTime;
+            endAttackTime = Time.time + meleeTime;
         }
 
         void DecideAction() {
             if (!meleeAttacking)
-                if (distanceToTarget < meleeRng / 2)
+                if (distanceToTarget < meleeRng)
                     TryHitPlayer();
                 else if (distanceToTarget < sightRng)
                     GoTo(player.Position);
@@ -44,7 +45,7 @@ namespace PartTimeKamikaze.KrakJam2023 {
 
         void UpdateAttacking() {
             if (meleeAttacking) {
-                if (Time.time > resolveAttackTime) {
+                if (Time.time > endAttackTime) {
                     StopAttacking();
                 }
             }
@@ -58,9 +59,9 @@ namespace PartTimeKamikaze.KrakJam2023 {
         void UpdateAnimation() {
             animator.SetBool("isAttacking", meleeAttacking);
             animator.SetBool("isWalking", !meleeAttacking && rigidbody.velocity.magnitude > 0.1);
-            if (rigidbody.velocity.x > 0)
+            if (turnRight)
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
-            else if (rigidbody.velocity.x < 0)
+            else
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
@@ -79,6 +80,10 @@ namespace PartTimeKamikaze.KrakJam2023 {
                 player = GameSystems.GetSystem<GameplaySystem>().PlayerInstance;
             if (player && !player.IsDead) {
                 distanceToTarget = Vector2.Distance(player.Position, transform.position);
+                if (player.transform.position.x > transform.position.x)
+                    turnRight = true;
+                else
+                    turnRight = false;
                 DecideAction();
                 UpdateAttacking();
             } else
